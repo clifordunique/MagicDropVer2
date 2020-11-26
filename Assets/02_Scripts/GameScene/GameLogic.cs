@@ -36,7 +36,7 @@ public class GameLogic : MonoBehaviour
     {
         TamaStart();
         NextTamaStart();
-        StartCoroutine(TamaMove());
+        StartCoroutine(TamaMoveClear());
     }
 
     void Update()
@@ -480,8 +480,8 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    //TamaMove Coroutone                 (void Start)
-    IEnumerator TamaMove()
+    //TamaMove & Clear Coroutone                 (void Start)
+    IEnumerator TamaMoveClear()
     {
         for (int i = 0; i < 77; i++)
         {
@@ -511,7 +511,7 @@ public class GameLogic : MonoBehaviour
 
         yield return new WaitForSeconds(tamaSpeed);
 
-        //Tama Clear
+        //Tama Clear Horizontal
         for(int a = 0; a < 4; a++)
         {
             //1列
@@ -1252,8 +1252,82 @@ public class GameLogic : MonoBehaviour
             }
         }
 
+        //Tama Clear Vertical
+        for(int b = 0; b < 49; b++)
+        {
+            if(TamaNumList[b] != 10 && TamaNumList[b] == TamaNumList[b + 7] && TamaNumList[b] == TamaNumList[b + 14] && TamaNumList[b] == TamaNumList[b + 21])
+            {
+                if(TamaNumList[b] == TamaNumList[b + 28] && TamaNumList[b + 28] < 70)
+                {
+                    if(TamaNumList[b] == TamaNumList[b + 35] && TamaNumList[b + 35] < 70)
+                    {
+                        if(TamaNumList[b] == TamaNumList[b + 42] && TamaNumList[b + 42] < 70)
+                        {
+                            //7個消す
+                            Destroy(TamaSpawnedList[b]);
+                            Destroy(TamaSpawnedList[b + 7]);
+                            Destroy(TamaSpawnedList[b + 14]);
+                            Destroy(TamaSpawnedList[b + 21]);
+                            Destroy(TamaSpawnedList[b + 28]);
+                            Destroy(TamaSpawnedList[b + 35]);
+                            Destroy(TamaSpawnedList[b + 42]);
+                            TamaNumList[b] = 10;
+                            TamaNumList[b + 7] = 10;
+                            TamaNumList[b + 14] = 10;
+                            TamaNumList[b + 21] = 10;
+                            TamaNumList[b + 28] = 10;
+                            TamaNumList[b + 35] = 10;
+                            TamaNumList[b + 42] = 10;
+                        }
+                        else
+                        {
+                            //6個消す
+                            Destroy(TamaSpawnedList[b]);
+                            Destroy(TamaSpawnedList[b + 7]);
+                            Destroy(TamaSpawnedList[b + 14]);
+                            Destroy(TamaSpawnedList[b + 21]);
+                            Destroy(TamaSpawnedList[b + 28]);
+                            Destroy(TamaSpawnedList[b + 35]);
+                            TamaNumList[b] = 10;
+                            TamaNumList[b + 7] = 10;
+                            TamaNumList[b + 14] = 10;
+                            TamaNumList[b + 21] = 10;
+                            TamaNumList[b + 28] = 10;
+                            TamaNumList[b + 35] = 10;
+                        }
+                    }
+                    else
+                    {
+                        //5個消す
+                        Destroy(TamaSpawnedList[b]);
+                        Destroy(TamaSpawnedList[b + 7]);
+                        Destroy(TamaSpawnedList[b + 14]);
+                        Destroy(TamaSpawnedList[b + 21]);
+                        Destroy(TamaSpawnedList[b + 28]);
+                        TamaNumList[b] = 10;
+                        TamaNumList[b + 7] = 10;
+                        TamaNumList[b + 14] = 10;
+                        TamaNumList[b + 21] = 10;
+                        TamaNumList[b + 28] = 10;
+                    }
+                }
+                else
+                {
+                    //4個消す
+                    Destroy(TamaSpawnedList[b]);
+                    Destroy(TamaSpawnedList[b + 7]);
+                    Destroy(TamaSpawnedList[b + 14]);
+                    Destroy(TamaSpawnedList[b + 21]);
+                    TamaNumList[b] = 10;
+                    TamaNumList[b + 7] = 10;
+                    TamaNumList[b + 14] = 10;
+                    TamaNumList[b + 21] = 10;
+                }
+            }
+        }
+        
 
-        StartCoroutine(TamaMove());
+        StartCoroutine(TamaMoveClear());
     }
 
     //GameOver Check

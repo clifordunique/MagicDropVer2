@@ -483,6 +483,7 @@ public class GameLogic : MonoBehaviour
     //TamaMove & Clear Coroutone                 (void Start)
     IEnumerator TamaMoveClear()
     {
+        //Move
         for (int i = 0; i < 77; i++)
         {
             if(TamaNumList[i] == 10)
@@ -588,667 +589,799 @@ public class GameLogic : MonoBehaviour
 
         for (int a = 7; a < 11; a++)
         {
+            int b = a + 1;
+            int c = a + 2;
+            int d = a + 3;
+            int e = a + 4;
+            int f = a + 5;
+            int g = a + 6;
+
             //2列
-            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[a + 1] && TamaNumList[a] == TamaNumList[a + 2] && TamaNumList[a] == TamaNumList[a + 3])
+            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[b] && TamaNumList[a] == TamaNumList[c] && TamaNumList[a] == TamaNumList[d])
             {
-                if (TamaNumList[a] == TamaNumList[a + 4] && TamaNumList[a + 4] < 14)
+                //条件
+                if(TamaNumList[a - 7] != 10 && TamaNumList[b - 7] != 10 && TamaNumList[c - 7] != 10 && TamaNumList[d - 7] != 10)
                 {
-                    if (TamaNumList[a] == TamaNumList[a + 5] && TamaNumList[a + 5] < 14)
+                    if (TamaNumList[a] == TamaNumList[e] && TamaNumList[e] < 14 && TamaNumList[e - 7] != 10)
                     {
-                        if (TamaNumList[a] == TamaNumList[a + 6] && TamaNumList[a + 6] < 14)
+                        if (TamaNumList[a] == TamaNumList[f] && TamaNumList[f] < 14 && TamaNumList[f - 7] != 10)
                         {
-                            //7個消す
-                            Destroy(TamaSpawnedList[a]);
-                            Destroy(TamaSpawnedList[a + 1]);
-                            Destroy(TamaSpawnedList[a + 2]);
-                            Destroy(TamaSpawnedList[a + 3]);
-                            Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
-                            Destroy(TamaSpawnedList[a + 6]);
-                            TamaNumList[a] = 10;
-                            TamaNumList[a + 1] = 10;
-                            TamaNumList[a + 2] = 10;
-                            TamaNumList[a + 3] = 10;
-                            TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
-                            TamaNumList[a + 6] = 10;
+                            if (TamaNumList[a] == TamaNumList[g] && TamaNumList[g] < 14 && TamaNumList[g - 7] != 10)
+                            {
+                                //7個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                Destroy(TamaSpawnedList[a + 6]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                                TamaNumList[a + 6] = 10;
+                            }
+                            else
+                            {
+                                //6個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                            }
                         }
                         else
                         {
-                            //6個消す
+                            //5個消す
                             Destroy(TamaSpawnedList[a]);
                             Destroy(TamaSpawnedList[a + 1]);
                             Destroy(TamaSpawnedList[a + 2]);
                             Destroy(TamaSpawnedList[a + 3]);
                             Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
                             TamaNumList[a] = 10;
                             TamaNumList[a + 1] = 10;
                             TamaNumList[a + 2] = 10;
                             TamaNumList[a + 3] = 10;
                             TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
                         }
                     }
                     else
                     {
-                        //5個消す
+                        //4個消す
                         Destroy(TamaSpawnedList[a]);
                         Destroy(TamaSpawnedList[a + 1]);
                         Destroy(TamaSpawnedList[a + 2]);
                         Destroy(TamaSpawnedList[a + 3]);
-                        Destroy(TamaSpawnedList[a + 4]);
                         TamaNumList[a] = 10;
                         TamaNumList[a + 1] = 10;
                         TamaNumList[a + 2] = 10;
                         TamaNumList[a + 3] = 10;
-                        TamaNumList[a + 4] = 10;
                     }
                 }
                 else
                 {
-                    //4個消す
-                    Destroy(TamaSpawnedList[a]);
-                    Destroy(TamaSpawnedList[a + 1]);
-                    Destroy(TamaSpawnedList[a + 2]);
-                    Destroy(TamaSpawnedList[a + 3]);
-                    TamaNumList[a] = 10;
-                    TamaNumList[a + 1] = 10;
-                    TamaNumList[a + 2] = 10;
-                    TamaNumList[a + 3] = 10;
+                    //Nothing
                 }
             }
         }
 
         for (int a = 14; a < 18; a++)
         {
+            int b = a + 1;
+            int c = a + 2;
+            int d = a + 3;
+            int e = a + 4;
+            int f = a + 5;
+            int g = a + 6;
+
             //3列
-            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[a + 1] && TamaNumList[a] == TamaNumList[a + 2] && TamaNumList[a] == TamaNumList[a + 3])
+            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[b] && TamaNumList[a] == TamaNumList[c] && TamaNumList[a] == TamaNumList[d])
             {
-                if (TamaNumList[a] == TamaNumList[a + 4] && TamaNumList[a + 4] < 21)
+                //条件
+                if(TamaNumList[a - 7] != 10 && TamaNumList[a - 14] != 10 && TamaNumList[b - 7] != 10 && TamaNumList[b - 14] != 10 && TamaNumList[c - 7] != 10 && TamaNumList[c - 14] != 10 && TamaNumList[d - 7] != 10 && TamaNumList[d - 14] != 10)
                 {
-                    if (TamaNumList[a] == TamaNumList[a + 5] && TamaNumList[a + 5] < 21)
+                    if (TamaNumList[a] == TamaNumList[e] && TamaNumList[e] < 21 && TamaNumList[e - 7] != 10 && TamaNumList[e - 14] != 10)
                     {
-                        if (TamaNumList[a] == TamaNumList[a + 6] && TamaNumList[a + 6] < 21)
+                        if (TamaNumList[a] == TamaNumList[f] && TamaNumList[f] < 21 && TamaNumList[f - 7] != 10 && TamaNumList[f - 14] != 10)
                         {
-                            //7個消す
-                            Destroy(TamaSpawnedList[a]);
-                            Destroy(TamaSpawnedList[a + 1]);
-                            Destroy(TamaSpawnedList[a + 2]);
-                            Destroy(TamaSpawnedList[a + 3]);
-                            Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
-                            Destroy(TamaSpawnedList[a + 6]);
-                            TamaNumList[a] = 10;
-                            TamaNumList[a + 1] = 10;
-                            TamaNumList[a + 2] = 10;
-                            TamaNumList[a + 3] = 10;
-                            TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
-                            TamaNumList[a + 6] = 10;
+                            if (TamaNumList[a] == TamaNumList[g] && TamaNumList[g] < 21 && TamaNumList[g - 7] != 10 && TamaNumList[g - 14] != 10)
+                            {
+                                //7個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                Destroy(TamaSpawnedList[a + 6]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                                TamaNumList[a + 6] = 10;
+                            }
+                            else
+                            {
+                                //6個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                            }
                         }
                         else
                         {
-                            //6個消す
+                            //5個消す
                             Destroy(TamaSpawnedList[a]);
                             Destroy(TamaSpawnedList[a + 1]);
                             Destroy(TamaSpawnedList[a + 2]);
                             Destroy(TamaSpawnedList[a + 3]);
                             Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
                             TamaNumList[a] = 10;
                             TamaNumList[a + 1] = 10;
                             TamaNumList[a + 2] = 10;
                             TamaNumList[a + 3] = 10;
                             TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
                         }
                     }
                     else
                     {
-                        //5個消す
+                        //4個消す
                         Destroy(TamaSpawnedList[a]);
                         Destroy(TamaSpawnedList[a + 1]);
                         Destroy(TamaSpawnedList[a + 2]);
                         Destroy(TamaSpawnedList[a + 3]);
-                        Destroy(TamaSpawnedList[a + 4]);
                         TamaNumList[a] = 10;
                         TamaNumList[a + 1] = 10;
                         TamaNumList[a + 2] = 10;
                         TamaNumList[a + 3] = 10;
-                        TamaNumList[a + 4] = 10;
                     }
                 }
                 else
                 {
-                    //4個消す
-                    Destroy(TamaSpawnedList[a]);
-                    Destroy(TamaSpawnedList[a + 1]);
-                    Destroy(TamaSpawnedList[a + 2]);
-                    Destroy(TamaSpawnedList[a + 3]);
-                    TamaNumList[a] = 10;
-                    TamaNumList[a + 1] = 10;
-                    TamaNumList[a + 2] = 10;
-                    TamaNumList[a + 3] = 10;
+                    //Nothing
                 }
             }
         }
 
         for (int a = 21; a < 25; a++)
         {
+            int b = a + 1;
+            int c = a + 2;
+            int d = a + 3;
+            int e = a + 4;
+            int f = a + 5;
+            int g = a + 6;
+
             //4列
-            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[a + 1] && TamaNumList[a] == TamaNumList[a + 2] && TamaNumList[a] == TamaNumList[a + 3])
+            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[b] && TamaNumList[a] == TamaNumList[c] && TamaNumList[a] == TamaNumList[d])
             {
-                if (TamaNumList[a] == TamaNumList[a + 4] && TamaNumList[a + 4] < 28)
+                //条件
+                if (TamaNumList[a - 7] != 10 && TamaNumList[a - 14] != 10 && TamaNumList[a - 21] != 10 && TamaNumList[b - 7] != 10 && TamaNumList[b - 14] != 10 && TamaNumList[b - 21] != 10 && TamaNumList[c - 7] != 10 && TamaNumList[c - 14] != 10 && TamaNumList[c - 21] != 10 && TamaNumList[d - 7] != 10 && TamaNumList[d - 14] != 10 && TamaNumList[d - 21] != 10)
                 {
-                    if (TamaNumList[a] == TamaNumList[a + 5] && TamaNumList[a + 5] < 28)
+                    if (TamaNumList[a] == TamaNumList[e] && TamaNumList[e] < 28 && TamaNumList[e - 7] != 10 && TamaNumList[e - 14] != 10 && TamaNumList[e - 21] != 10)
                     {
-                        if (TamaNumList[a] == TamaNumList[a + 6] && TamaNumList[a + 6] < 28)
+                        if (TamaNumList[a] == TamaNumList[f] && TamaNumList[f] < 28 && TamaNumList[f - 7] != 10 && TamaNumList[f - 14] != 10 && TamaNumList[f - 21] != 10)
                         {
-                            //7個消す
-                            Destroy(TamaSpawnedList[a]);
-                            Destroy(TamaSpawnedList[a + 1]);
-                            Destroy(TamaSpawnedList[a + 2]);
-                            Destroy(TamaSpawnedList[a + 3]);
-                            Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
-                            Destroy(TamaSpawnedList[a + 6]);
-                            TamaNumList[a] = 10;
-                            TamaNumList[a + 1] = 10;
-                            TamaNumList[a + 2] = 10;
-                            TamaNumList[a + 3] = 10;
-                            TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
-                            TamaNumList[a + 6] = 10;
+                            if (TamaNumList[a] == TamaNumList[g] && TamaNumList[g] < 28 && TamaNumList[g - 7] != 10 && TamaNumList[g - 14] != 10 && TamaNumList[g - 21] != 10)
+                            {
+                                //7個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                Destroy(TamaSpawnedList[a + 6]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                                TamaNumList[a + 6] = 10;
+                            }
+                            else
+                            {
+                                //6個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                            }
                         }
                         else
                         {
-                            //6個消す
+                            //5個消す
                             Destroy(TamaSpawnedList[a]);
                             Destroy(TamaSpawnedList[a + 1]);
                             Destroy(TamaSpawnedList[a + 2]);
                             Destroy(TamaSpawnedList[a + 3]);
                             Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
                             TamaNumList[a] = 10;
                             TamaNumList[a + 1] = 10;
                             TamaNumList[a + 2] = 10;
                             TamaNumList[a + 3] = 10;
                             TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
                         }
                     }
                     else
                     {
-                        //5個消す
+                        //4個消す
                         Destroy(TamaSpawnedList[a]);
                         Destroy(TamaSpawnedList[a + 1]);
                         Destroy(TamaSpawnedList[a + 2]);
                         Destroy(TamaSpawnedList[a + 3]);
-                        Destroy(TamaSpawnedList[a + 4]);
                         TamaNumList[a] = 10;
                         TamaNumList[a + 1] = 10;
                         TamaNumList[a + 2] = 10;
                         TamaNumList[a + 3] = 10;
-                        TamaNumList[a + 4] = 10;
                     }
-                }
-                else
-                {
-                    //4個消す
-                    Destroy(TamaSpawnedList[a]);
-                    Destroy(TamaSpawnedList[a + 1]);
-                    Destroy(TamaSpawnedList[a + 2]);
-                    Destroy(TamaSpawnedList[a + 3]);
-                    TamaNumList[a] = 10;
-                    TamaNumList[a + 1] = 10;
-                    TamaNumList[a + 2] = 10;
-                    TamaNumList[a + 3] = 10;
                 }
             }
         }
 
         for (int a = 28; a < 32; a++)
         {
+            int b = a + 1;
+            int c = a + 2;
+            int d = a + 3;
+            int e = a + 4;
+            int f = a + 5;
+            int g = a + 6;
+
             //5列
-            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[a + 1] && TamaNumList[a] == TamaNumList[a + 2] && TamaNumList[a] == TamaNumList[a + 3])
+            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[b] && TamaNumList[a] == TamaNumList[c] && TamaNumList[a] == TamaNumList[d])
             {
-                if (TamaNumList[a] == TamaNumList[a + 4] && TamaNumList[a + 4] < 35)
+                //条件
+                if(TamaNumList[a - 7] != 10 && TamaNumList[a - 14] != 10 && TamaNumList[a - 21] != 10 && TamaNumList[a - 28] != 10 && TamaNumList[b - 7] != 10 && TamaNumList[b - 14] != 10 && TamaNumList[b - 21] != 10 && TamaNumList[b - 28] != 10 && TamaNumList[c - 7] != 10 && TamaNumList[c - 14] != 10 && TamaNumList[c - 21] != 10 && TamaNumList[c - 28] != 10 && TamaNumList[d - 7] != 10 && TamaNumList[d - 14] != 10 && TamaNumList[d - 21] != 10 && TamaNumList[d - 28] != 10)
                 {
-                    if (TamaNumList[a] == TamaNumList[a + 5] && TamaNumList[a + 5] < 35)
+                    if (TamaNumList[a] == TamaNumList[e] && TamaNumList[e] < 35 && TamaNumList[e - 7] != 10 && TamaNumList[e - 14] != 10 && TamaNumList[e - 21] != 10 && TamaNumList[e - 28] != 10)
                     {
-                        if (TamaNumList[a] == TamaNumList[a + 6] && TamaNumList[a + 6] < 35)
+                        if (TamaNumList[a] == TamaNumList[f] && TamaNumList[f] < 35 && TamaNumList[f - 7] != 10 && TamaNumList[f - 14] != 10 && TamaNumList[f - 21] != 10 && TamaNumList[f - 28] != 10)
                         {
-                            //7個消す
-                            Destroy(TamaSpawnedList[a]);
-                            Destroy(TamaSpawnedList[a + 1]);
-                            Destroy(TamaSpawnedList[a + 2]);
-                            Destroy(TamaSpawnedList[a + 3]);
-                            Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
-                            Destroy(TamaSpawnedList[a + 6]);
-                            TamaNumList[a] = 10;
-                            TamaNumList[a + 1] = 10;
-                            TamaNumList[a + 2] = 10;
-                            TamaNumList[a + 3] = 10;
-                            TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
-                            TamaNumList[a + 6] = 10;
+                            if (TamaNumList[a] == TamaNumList[g] && TamaNumList[g] < 35 && TamaNumList[g - 7] != 10 && TamaNumList[g - 14] != 10 && TamaNumList[g - 21] != 10 && TamaNumList[g - 28] != 10)
+                            {
+                                //7個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                Destroy(TamaSpawnedList[a + 6]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                                TamaNumList[a + 6] = 10;
+                            }
+                            else
+                            {
+                                //6個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                            }
                         }
                         else
                         {
-                            //6個消す
+                            //5個消す
                             Destroy(TamaSpawnedList[a]);
                             Destroy(TamaSpawnedList[a + 1]);
                             Destroy(TamaSpawnedList[a + 2]);
                             Destroy(TamaSpawnedList[a + 3]);
                             Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
                             TamaNumList[a] = 10;
                             TamaNumList[a + 1] = 10;
                             TamaNumList[a + 2] = 10;
                             TamaNumList[a + 3] = 10;
                             TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
                         }
                     }
                     else
                     {
-                        //5個消す
+                        //4個消す
                         Destroy(TamaSpawnedList[a]);
                         Destroy(TamaSpawnedList[a + 1]);
                         Destroy(TamaSpawnedList[a + 2]);
                         Destroy(TamaSpawnedList[a + 3]);
-                        Destroy(TamaSpawnedList[a + 4]);
                         TamaNumList[a] = 10;
                         TamaNumList[a + 1] = 10;
                         TamaNumList[a + 2] = 10;
                         TamaNumList[a + 3] = 10;
-                        TamaNumList[a + 4] = 10;
                     }
                 }
                 else
                 {
-                    //4個消す
-                    Destroy(TamaSpawnedList[a]);
-                    Destroy(TamaSpawnedList[a + 1]);
-                    Destroy(TamaSpawnedList[a + 2]);
-                    Destroy(TamaSpawnedList[a + 3]);
-                    TamaNumList[a] = 10;
-                    TamaNumList[a + 1] = 10;
-                    TamaNumList[a + 2] = 10;
-                    TamaNumList[a + 3] = 10;
+                    //Nothing
                 }
             }
         }
 
         for (int a = 35; a < 39; a++)
         {
+            int b = a + 1;
+            int c = a + 2;
+            int d = a + 3;
+            int e = a + 4;
+            int f = a + 5;
+            int g = a + 6;
+
             //6列
-            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[a + 1] && TamaNumList[a] == TamaNumList[a + 2] && TamaNumList[a] == TamaNumList[a + 3])
+            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[b] && TamaNumList[a] == TamaNumList[c] && TamaNumList[a] == TamaNumList[d])
             {
-                if (TamaNumList[a] == TamaNumList[a + 4] && TamaNumList[a + 4] < 42)
+                //条件(35)
+                if(TamaNumList[a - 7] != 10 && TamaNumList[a - 14] != 10 && TamaNumList[a - 21] != 10 && TamaNumList[a - 28] != 10 && TamaNumList[a - 35] != 10 && TamaNumList[b - 7] != 10 && TamaNumList[b - 14] != 10 && TamaNumList[b - 21] != 10 && TamaNumList[b - 28] != 10 && TamaNumList[b - 35] != 10 && TamaNumList[c - 7] != 10 && TamaNumList[c - 14] != 10 && TamaNumList[c - 21] != 10 && TamaNumList[c - 28] != 10 && TamaNumList[c - 35] != 10 && TamaNumList[d - 7] != 10 && TamaNumList[d - 14] != 10 && TamaNumList[d - 21] != 10 && TamaNumList[d - 28] != 10 && TamaNumList[d - 35] != 10)
                 {
-                    if (TamaNumList[a] == TamaNumList[a + 5] && TamaNumList[a + 5] < 42)
+                    if (TamaNumList[a] == TamaNumList[e] && TamaNumList[e] < 42 && TamaNumList[e - 7] != 10 && TamaNumList[e - 14] != 10 && TamaNumList[e - 21] != 10 && TamaNumList[e - 28] != 10 && TamaNumList[e - 35] != 10)
                     {
-                        if (TamaNumList[a] == TamaNumList[a + 6] && TamaNumList[a + 6] < 42)
+                        if (TamaNumList[a] == TamaNumList[f] && TamaNumList[f] < 42 && TamaNumList[f - 7] != 10 && TamaNumList[f - 14] != 10 && TamaNumList[f - 21] != 10 && TamaNumList[f - 28] != 10 && TamaNumList[f - 35] != 10)
                         {
-                            //7個消す
-                            Destroy(TamaSpawnedList[a]);
-                            Destroy(TamaSpawnedList[a + 1]);
-                            Destroy(TamaSpawnedList[a + 2]);
-                            Destroy(TamaSpawnedList[a + 3]);
-                            Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
-                            Destroy(TamaSpawnedList[a + 6]);
-                            TamaNumList[a] = 10;
-                            TamaNumList[a + 1] = 10;
-                            TamaNumList[a + 2] = 10;
-                            TamaNumList[a + 3] = 10;
-                            TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
-                            TamaNumList[a + 6] = 10;
+                            if (TamaNumList[a] == TamaNumList[g] && TamaNumList[g] < 42 && TamaNumList[g - 7] != 10 && TamaNumList[g - 14] != 10 && TamaNumList[g - 21] != 10 && TamaNumList[g - 28] != 10 && TamaNumList[g - 35] != 10)
+                            {
+                                //7個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                Destroy(TamaSpawnedList[a + 6]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                                TamaNumList[a + 6] = 10;
+                            }
+                            else
+                            {
+                                //6個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                            }
                         }
                         else
                         {
-                            //6個消す
+                            //5個消す
                             Destroy(TamaSpawnedList[a]);
                             Destroy(TamaSpawnedList[a + 1]);
                             Destroy(TamaSpawnedList[a + 2]);
                             Destroy(TamaSpawnedList[a + 3]);
                             Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
                             TamaNumList[a] = 10;
                             TamaNumList[a + 1] = 10;
                             TamaNumList[a + 2] = 10;
                             TamaNumList[a + 3] = 10;
                             TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
                         }
                     }
                     else
                     {
-                        //5個消す
+                        //4個消す
                         Destroy(TamaSpawnedList[a]);
                         Destroy(TamaSpawnedList[a + 1]);
                         Destroy(TamaSpawnedList[a + 2]);
                         Destroy(TamaSpawnedList[a + 3]);
-                        Destroy(TamaSpawnedList[a + 4]);
                         TamaNumList[a] = 10;
                         TamaNumList[a + 1] = 10;
                         TamaNumList[a + 2] = 10;
                         TamaNumList[a + 3] = 10;
-                        TamaNumList[a + 4] = 10;
                     }
                 }
                 else
                 {
-                    //4個消す
-                    Destroy(TamaSpawnedList[a]);
-                    Destroy(TamaSpawnedList[a + 1]);
-                    Destroy(TamaSpawnedList[a + 2]);
-                    Destroy(TamaSpawnedList[a + 3]);
-                    TamaNumList[a] = 10;
-                    TamaNumList[a + 1] = 10;
-                    TamaNumList[a + 2] = 10;
-                    TamaNumList[a + 3] = 10;
+                    //Nothing
                 }
             }
         }
 
         for (int a = 42; a < 46; a++)
         {
+            int b = a + 1;
+            int c = a + 2;
+            int d = a + 3;
+            int e = a + 4;
+            int f = a + 5;
+            int g = a + 6;
+
             //7列
-            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[a + 1] && TamaNumList[a] == TamaNumList[a + 2] && TamaNumList[a] == TamaNumList[a + 3])
+            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[b] && TamaNumList[a] == TamaNumList[c] && TamaNumList[a] == TamaNumList[d])
             {
-                if (TamaNumList[a] == TamaNumList[a + 4] && TamaNumList[a + 4] < 49)
+                //条件(42)
+                if (TamaNumList[a - 7] != 10 && TamaNumList[a - 14] != 10 && TamaNumList[a - 21] != 10 && TamaNumList[a - 28] != 10 && TamaNumList[a - 35] != 10 && TamaNumList[a - 42] != 10 && TamaNumList[b - 7] != 10 && TamaNumList[b - 14] != 10 && TamaNumList[b - 21] != 10 && TamaNumList[b - 28] != 10 && TamaNumList[b - 35] != 10 && TamaNumList[b - 42] != 10 && TamaNumList[c - 7] != 10 && TamaNumList[c - 14] != 10 && TamaNumList[c - 21] != 10 && TamaNumList[c - 28] != 10 && TamaNumList[c - 35] != 10 && TamaNumList[c - 42] != 10 && TamaNumList[d - 7] != 10 && TamaNumList[d - 14] != 10 && TamaNumList[d - 21] != 10 && TamaNumList[d - 28] != 10 && TamaNumList[d - 35] != 10 && TamaNumList[d - 42] != 10)
                 {
-                    if (TamaNumList[a] == TamaNumList[a + 5] && TamaNumList[a + 5] < 49)
+                    if (TamaNumList[a] == TamaNumList[e] && TamaNumList[e] < 49 && TamaNumList[e - 7] != 10 && TamaNumList[e - 14] != 10 && TamaNumList[e - 21] != 10 && TamaNumList[e - 28] != 10 && TamaNumList[e - 35] != 10 && TamaNumList[e - 42] != 10)
                     {
-                        if (TamaNumList[a] == TamaNumList[a + 6] && TamaNumList[a + 6] < 49)
+                        if (TamaNumList[a] == TamaNumList[f] && TamaNumList[f] < 49 && TamaNumList[f - 7] != 10 && TamaNumList[f - 14] != 10 && TamaNumList[f - 21] != 10 && TamaNumList[f - 28] != 10 && TamaNumList[f - 35] != 10 && TamaNumList[f - 42] != 10)
                         {
-                            //7個消す
-                            Destroy(TamaSpawnedList[a]);
-                            Destroy(TamaSpawnedList[a + 1]);
-                            Destroy(TamaSpawnedList[a + 2]);
-                            Destroy(TamaSpawnedList[a + 3]);
-                            Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
-                            Destroy(TamaSpawnedList[a + 6]);
-                            TamaNumList[a] = 10;
-                            TamaNumList[a + 1] = 10;
-                            TamaNumList[a + 2] = 10;
-                            TamaNumList[a + 3] = 10;
-                            TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
-                            TamaNumList[a + 6] = 10;
+                            if (TamaNumList[a] == TamaNumList[g] && TamaNumList[g] < 49 && TamaNumList[g - 7] != 10 && TamaNumList[g - 14] != 10 && TamaNumList[g - 21] != 10 && TamaNumList[g - 28] != 10 && TamaNumList[g - 35] != 10 && TamaNumList[g - 42] != 10)
+                            {
+                                //7個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                Destroy(TamaSpawnedList[a + 6]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                                TamaNumList[a + 6] = 10;
+                            }
+                            else
+                            {
+                                //6個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                            }
                         }
                         else
                         {
-                            //6個消す
+                            //5個消す
                             Destroy(TamaSpawnedList[a]);
                             Destroy(TamaSpawnedList[a + 1]);
                             Destroy(TamaSpawnedList[a + 2]);
                             Destroy(TamaSpawnedList[a + 3]);
                             Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
                             TamaNumList[a] = 10;
                             TamaNumList[a + 1] = 10;
                             TamaNumList[a + 2] = 10;
                             TamaNumList[a + 3] = 10;
                             TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
                         }
                     }
                     else
                     {
-                        //5個消す
+                        //4個消す
                         Destroy(TamaSpawnedList[a]);
                         Destroy(TamaSpawnedList[a + 1]);
                         Destroy(TamaSpawnedList[a + 2]);
                         Destroy(TamaSpawnedList[a + 3]);
-                        Destroy(TamaSpawnedList[a + 4]);
                         TamaNumList[a] = 10;
                         TamaNumList[a + 1] = 10;
                         TamaNumList[a + 2] = 10;
                         TamaNumList[a + 3] = 10;
-                        TamaNumList[a + 4] = 10;
                     }
                 }
                 else
                 {
-                    //4個消す
-                    Destroy(TamaSpawnedList[a]);
-                    Destroy(TamaSpawnedList[a + 1]);
-                    Destroy(TamaSpawnedList[a + 2]);
-                    Destroy(TamaSpawnedList[a + 3]);
-                    TamaNumList[a] = 10;
-                    TamaNumList[a + 1] = 10;
-                    TamaNumList[a + 2] = 10;
-                    TamaNumList[a + 3] = 10;
+                    //Nothing
                 }
             }
         }
 
         for (int a = 49; a < 53; a++)
         {
+            int b = a + 1;
+            int c = a + 2;
+            int d = a + 3;
+            int e = a + 4;
+            int f = a + 5;
+            int g = a + 6;
+
             //8列
-            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[a + 1] && TamaNumList[a] == TamaNumList[a + 2] && TamaNumList[a] == TamaNumList[a + 3])
+            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[b] && TamaNumList[a] == TamaNumList[c] && TamaNumList[a] == TamaNumList[d])
             {
-                if (TamaNumList[a] == TamaNumList[a + 4] && TamaNumList[a + 4] < 56)
+                //条件(49)
+                if(TamaNumList[a - 7] != 10 && TamaNumList[a - 14] != 10 && TamaNumList[a - 21] != 10 && TamaNumList[a - 28] != 10 && TamaNumList[a - 35] != 10 && TamaNumList[a - 42] != 10 && TamaNumList[a - 49] != 10 && TamaNumList[b - 7] != 10 && TamaNumList[b - 14] != 10 && TamaNumList[b - 21] != 10 && TamaNumList[b - 28] != 10 && TamaNumList[b - 35] != 10 && TamaNumList[b - 42] != 10 && TamaNumList[b - 49] != 10 && TamaNumList[c - 7] != 10 && TamaNumList[c - 14] != 10 && TamaNumList[c - 21] != 10 && TamaNumList[c - 28] != 10 && TamaNumList[c - 35] != 10 && TamaNumList[c - 42] != 10 && TamaNumList[c - 49] != 10 && TamaNumList[d - 7] != 10 && TamaNumList[d - 14] != 10 && TamaNumList[d - 21] != 10 && TamaNumList[d - 28] != 10 && TamaNumList[d - 35] != 10 && TamaNumList[d - 42] != 10 && TamaNumList[d - 49] != 10)
                 {
-                    if (TamaNumList[a] == TamaNumList[a + 5] && TamaNumList[a + 5] < 56)
+                    if (TamaNumList[a] == TamaNumList[e] && TamaNumList[e] < 56 && TamaNumList[e - 7] != 10 && TamaNumList[e - 14] != 10 && TamaNumList[e - 21] != 10 && TamaNumList[e - 28] != 10 && TamaNumList[e - 35] != 10 && TamaNumList[e - 42] != 10 && TamaNumList[e - 49] != 10)
                     {
-                        if (TamaNumList[a] == TamaNumList[a + 6] && TamaNumList[a + 6] < 56)
+                        if (TamaNumList[a] == TamaNumList[f] && TamaNumList[f] < 56 && TamaNumList[f - 7] != 10 && TamaNumList[f - 14] != 10 && TamaNumList[f - 21] != 10 && TamaNumList[f - 28] != 10 && TamaNumList[f - 35] != 10 && TamaNumList[f - 42] != 10 && TamaNumList[f - 49] != 10)
                         {
-                            //7個消す
-                            Destroy(TamaSpawnedList[a]);
-                            Destroy(TamaSpawnedList[a + 1]);
-                            Destroy(TamaSpawnedList[a + 2]);
-                            Destroy(TamaSpawnedList[a + 3]);
-                            Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
-                            Destroy(TamaSpawnedList[a + 6]);
-                            TamaNumList[a] = 10;
-                            TamaNumList[a + 1] = 10;
-                            TamaNumList[a + 2] = 10;
-                            TamaNumList[a + 3] = 10;
-                            TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
-                            TamaNumList[a + 6] = 10;
+                            if (TamaNumList[a] == TamaNumList[g] && TamaNumList[g] < 56 && TamaNumList[g - 7] != 10 && TamaNumList[g - 14] != 10 && TamaNumList[g - 21] != 10 && TamaNumList[g - 28] != 10 && TamaNumList[g - 35] != 10 && TamaNumList[g - 42] != 10 && TamaNumList[g - 49] != 10)
+                            {
+                                //7個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                Destroy(TamaSpawnedList[a + 6]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                                TamaNumList[a + 6] = 10;
+                            }
+                            else
+                            {
+                                //6個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                            }
                         }
                         else
                         {
-                            //6個消す
+                            //5個消す
                             Destroy(TamaSpawnedList[a]);
                             Destroy(TamaSpawnedList[a + 1]);
                             Destroy(TamaSpawnedList[a + 2]);
                             Destroy(TamaSpawnedList[a + 3]);
                             Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
                             TamaNumList[a] = 10;
                             TamaNumList[a + 1] = 10;
                             TamaNumList[a + 2] = 10;
                             TamaNumList[a + 3] = 10;
                             TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
                         }
                     }
                     else
                     {
-                        //5個消す
+                        //4個消す
                         Destroy(TamaSpawnedList[a]);
                         Destroy(TamaSpawnedList[a + 1]);
                         Destroy(TamaSpawnedList[a + 2]);
                         Destroy(TamaSpawnedList[a + 3]);
-                        Destroy(TamaSpawnedList[a + 4]);
                         TamaNumList[a] = 10;
                         TamaNumList[a + 1] = 10;
                         TamaNumList[a + 2] = 10;
                         TamaNumList[a + 3] = 10;
-                        TamaNumList[a + 4] = 10;
                     }
                 }
                 else
                 {
-                    //4個消す
-                    Destroy(TamaSpawnedList[a]);
-                    Destroy(TamaSpawnedList[a + 1]);
-                    Destroy(TamaSpawnedList[a + 2]);
-                    Destroy(TamaSpawnedList[a + 3]);
-                    TamaNumList[a] = 10;
-                    TamaNumList[a + 1] = 10;
-                    TamaNumList[a + 2] = 10;
-                    TamaNumList[a + 3] = 10;
+                    //Nothing
                 }
             }
         }
 
         for (int a = 56; a < 60; a++)
         {
+            int b = a + 1;
+            int c = a + 2;
+            int d = a + 3;
+            int e = a + 4;
+            int f = a + 5;
+            int g = a + 6;
+
             //9列
-            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[a + 1] && TamaNumList[a] == TamaNumList[a + 2] && TamaNumList[a] == TamaNumList[a + 3])
+            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[b] && TamaNumList[a] == TamaNumList[c] && TamaNumList[a] == TamaNumList[d])
             {
-                if (TamaNumList[a] == TamaNumList[a + 4] && TamaNumList[a + 4] < 63)
+                //条件(56)
+                if(TamaNumList[a - 7] != 10 && TamaNumList[a - 14] != 10 && TamaNumList[a - 21] != 10 && TamaNumList[a - 28] != 10 && TamaNumList[a - 35] != 10 && TamaNumList[a - 42] != 10 && TamaNumList[a - 49] != 10 && TamaNumList[a - 56] != 10 && TamaNumList[b - 7] != 10 && TamaNumList[b - 14] != 10 && TamaNumList[b - 21] != 10 && TamaNumList[b - 28] != 10 && TamaNumList[b - 35] != 10 && TamaNumList[b - 42] != 10 && TamaNumList[b - 49] != 10 && TamaNumList[b - 56] != 10 && TamaNumList[c - 7] != 10 && TamaNumList[c - 14] != 10 && TamaNumList[c - 21] != 10 && TamaNumList[c - 28] != 10 && TamaNumList[c - 35] != 10 && TamaNumList[c - 42] != 10 && TamaNumList[c - 49] != 10 && TamaNumList[c - 56] != 10 && TamaNumList[d - 7] != 10 && TamaNumList[d - 14] != 10 && TamaNumList[d - 21] != 10 && TamaNumList[d - 28] != 10 && TamaNumList[d - 35] != 10 && TamaNumList[d - 42] != 10 && TamaNumList[d - 49] != 10 && TamaNumList[d - 56] != 10)
                 {
-                    if (TamaNumList[a] == TamaNumList[a + 5] && TamaNumList[a + 5] < 63)
+                    if (TamaNumList[a] == TamaNumList[e] && TamaNumList[e] < 63 && TamaNumList[e - 7] != 10 && TamaNumList[e - 14] != 10 && TamaNumList[e - 21] != 10 && TamaNumList[e - 28] != 10 && TamaNumList[e - 35] != 10 && TamaNumList[e - 42] != 10 && TamaNumList[e - 49] != 10 && TamaNumList[e - 56] != 10)
                     {
-                        if (TamaNumList[a] == TamaNumList[a + 6] && TamaNumList[a + 6] < 63)
+                        if (TamaNumList[a] == TamaNumList[f] && TamaNumList[f] < 63 && TamaNumList[f - 7] != 10 && TamaNumList[f - 14] != 10 && TamaNumList[f - 21] != 10 && TamaNumList[f - 28] != 10 && TamaNumList[f - 35] != 10 && TamaNumList[f - 42] != 10 && TamaNumList[f - 49] != 10 && TamaNumList[f - 56] != 10)
                         {
-                            //7個消す
-                            Destroy(TamaSpawnedList[a]);
-                            Destroy(TamaSpawnedList[a + 1]);
-                            Destroy(TamaSpawnedList[a + 2]);
-                            Destroy(TamaSpawnedList[a + 3]);
-                            Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
-                            Destroy(TamaSpawnedList[a + 6]);
-                            TamaNumList[a] = 10;
-                            TamaNumList[a + 1] = 10;
-                            TamaNumList[a + 2] = 10;
-                            TamaNumList[a + 3] = 10;
-                            TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
-                            TamaNumList[a + 6] = 10;
+                            if (TamaNumList[a] == TamaNumList[g] && TamaNumList[g] < 63 && TamaNumList[g - 7] != 10 && TamaNumList[g - 14] != 10 && TamaNumList[g - 21] != 10 && TamaNumList[g - 28] != 10 && TamaNumList[g - 35] != 10 && TamaNumList[g - 42] != 10 && TamaNumList[g - 49] != 10 && TamaNumList[g - 56] != 10)
+                            {
+                                //7個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                Destroy(TamaSpawnedList[a + 6]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                                TamaNumList[a + 6] = 10;
+                            }
+                            else
+                            {
+                                //6個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                            }
                         }
                         else
                         {
-                            //6個消す
+                            //5個消す
                             Destroy(TamaSpawnedList[a]);
                             Destroy(TamaSpawnedList[a + 1]);
                             Destroy(TamaSpawnedList[a + 2]);
                             Destroy(TamaSpawnedList[a + 3]);
                             Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
                             TamaNumList[a] = 10;
                             TamaNumList[a + 1] = 10;
                             TamaNumList[a + 2] = 10;
                             TamaNumList[a + 3] = 10;
                             TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
                         }
                     }
                     else
                     {
-                        //5個消す
+                        //4個消す
                         Destroy(TamaSpawnedList[a]);
                         Destroy(TamaSpawnedList[a + 1]);
                         Destroy(TamaSpawnedList[a + 2]);
                         Destroy(TamaSpawnedList[a + 3]);
-                        Destroy(TamaSpawnedList[a + 4]);
                         TamaNumList[a] = 10;
                         TamaNumList[a + 1] = 10;
                         TamaNumList[a + 2] = 10;
                         TamaNumList[a + 3] = 10;
-                        TamaNumList[a + 4] = 10;
                     }
                 }
                 else
                 {
-                    //4個消す
-                    Destroy(TamaSpawnedList[a]);
-                    Destroy(TamaSpawnedList[a + 1]);
-                    Destroy(TamaSpawnedList[a + 2]);
-                    Destroy(TamaSpawnedList[a + 3]);
-                    TamaNumList[a] = 10;
-                    TamaNumList[a + 1] = 10;
-                    TamaNumList[a + 2] = 10;
-                    TamaNumList[a + 3] = 10;
+                    //Nothing
                 }
             }
         }
 
         for (int a = 63; a < 67; a++)
         {
+            int b = a + 1;
+            int c = a + 2;
+            int d = a + 3;
+            int e = a + 4;
+            int f = a + 5;
+            int g = a + 6;
+
             //10列
-            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[a + 1] && TamaNumList[a] == TamaNumList[a + 2] && TamaNumList[a] == TamaNumList[a + 3])
+            if (TamaNumList[a] != 10 && TamaNumList[a] == TamaNumList[b] && TamaNumList[a] == TamaNumList[c] && TamaNumList[a] == TamaNumList[d])
             {
-                if (TamaNumList[a] == TamaNumList[a + 4] && TamaNumList[a + 4] < 70)
+                //条件(63)
+                if(TamaNumList[a - 7] != 10 && TamaNumList[a - 14] != 10 && TamaNumList[a - 21] != 10 && TamaNumList[a - 28] != 10 && TamaNumList[a - 35] != 10 && TamaNumList[a - 42] != 10 && TamaNumList[a - 49] != 10 && TamaNumList[a - 56] != 10 && TamaNumList[a - 63] != 10 && TamaNumList[b - 7] != 10 && TamaNumList[b - 14] != 10 && TamaNumList[b - 21] != 10 && TamaNumList[b - 28] != 10 && TamaNumList[b - 35] != 10 && TamaNumList[b - 42] != 10 && TamaNumList[b - 49] != 10 && TamaNumList[b - 56] != 10 && TamaNumList[b - 63] != 10 && TamaNumList[c - 7] != 10 && TamaNumList[c - 14] != 10 && TamaNumList[c - 21] != 10 && TamaNumList[c - 28] != 10 && TamaNumList[c - 35] != 10 && TamaNumList[c - 42] != 10 && TamaNumList[c - 49] != 10 && TamaNumList[c - 56] != 10 && TamaNumList[c - 63] != 10 && TamaNumList[d - 7] != 10 && TamaNumList[d - 14] != 10 && TamaNumList[d - 21] != 10 && TamaNumList[d - 28] != 10 && TamaNumList[d - 35] != 10 && TamaNumList[d - 42] != 10 && TamaNumList[d - 49] != 10 && TamaNumList[d - 56] != 10 && TamaNumList[d - 63] != 10)
                 {
-                    if (TamaNumList[a] == TamaNumList[a + 5] && TamaNumList[a + 5] < 70)
+                    if (TamaNumList[a] == TamaNumList[e] && TamaNumList[e] < 70 && TamaNumList[e - 7] != 10 && TamaNumList[e - 14] != 10 && TamaNumList[e - 21] != 10 && TamaNumList[e - 28] != 10 && TamaNumList[e - 35] != 10 && TamaNumList[e - 42] != 10 && TamaNumList[e - 49] != 10 && TamaNumList[e - 56] != 10 && TamaNumList[e - 63] != 10)
                     {
-                        if (TamaNumList[a] == TamaNumList[a + 6] && TamaNumList[a + 6] < 70)
+                        if (TamaNumList[a] == TamaNumList[f] && TamaNumList[f] < 70 && TamaNumList[f - 7] != 10 && TamaNumList[f - 14] != 10 && TamaNumList[f - 21] != 10 && TamaNumList[f - 28] != 10 && TamaNumList[f - 35] != 10 && TamaNumList[f - 42] != 10 && TamaNumList[f - 49] != 10 && TamaNumList[f - 56] != 10 && TamaNumList[f - 63] != 10)
                         {
-                            //7個消す
-                            Destroy(TamaSpawnedList[a]);
-                            Destroy(TamaSpawnedList[a + 1]);
-                            Destroy(TamaSpawnedList[a + 2]);
-                            Destroy(TamaSpawnedList[a + 3]);
-                            Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
-                            Destroy(TamaSpawnedList[a + 6]);
-                            TamaNumList[a] = 10;
-                            TamaNumList[a + 1] = 10;
-                            TamaNumList[a + 2] = 10;
-                            TamaNumList[a + 3] = 10;
-                            TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
-                            TamaNumList[a + 6] = 10;
+                            if (TamaNumList[a] == TamaNumList[g] && TamaNumList[g] < 70 && TamaNumList[g - 7] != 10 && TamaNumList[g - 14] != 10 && TamaNumList[g - 21] != 10 && TamaNumList[g - 28] != 10 && TamaNumList[g - 35] != 10 && TamaNumList[g - 42] != 10 && TamaNumList[g - 49] != 10 && TamaNumList[g - 56] != 10 && TamaNumList[g - 63] != 10)
+                            {
+                                //7個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                Destroy(TamaSpawnedList[a + 6]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                                TamaNumList[a + 6] = 10;
+                            }
+                            else
+                            {
+                                //6個消す
+                                Destroy(TamaSpawnedList[a]);
+                                Destroy(TamaSpawnedList[a + 1]);
+                                Destroy(TamaSpawnedList[a + 2]);
+                                Destroy(TamaSpawnedList[a + 3]);
+                                Destroy(TamaSpawnedList[a + 4]);
+                                Destroy(TamaSpawnedList[a + 5]);
+                                TamaNumList[a] = 10;
+                                TamaNumList[a + 1] = 10;
+                                TamaNumList[a + 2] = 10;
+                                TamaNumList[a + 3] = 10;
+                                TamaNumList[a + 4] = 10;
+                                TamaNumList[a + 5] = 10;
+                            }
                         }
                         else
                         {
-                            //6個消す
+                            //5個消す
                             Destroy(TamaSpawnedList[a]);
                             Destroy(TamaSpawnedList[a + 1]);
                             Destroy(TamaSpawnedList[a + 2]);
                             Destroy(TamaSpawnedList[a + 3]);
                             Destroy(TamaSpawnedList[a + 4]);
-                            Destroy(TamaSpawnedList[a + 5]);
                             TamaNumList[a] = 10;
                             TamaNumList[a + 1] = 10;
                             TamaNumList[a + 2] = 10;
                             TamaNumList[a + 3] = 10;
                             TamaNumList[a + 4] = 10;
-                            TamaNumList[a + 5] = 10;
                         }
                     }
                     else
                     {
-                        //5個消す
+                        //4個消す
                         Destroy(TamaSpawnedList[a]);
                         Destroy(TamaSpawnedList[a + 1]);
                         Destroy(TamaSpawnedList[a + 2]);
                         Destroy(TamaSpawnedList[a + 3]);
-                        Destroy(TamaSpawnedList[a + 4]);
                         TamaNumList[a] = 10;
                         TamaNumList[a + 1] = 10;
                         TamaNumList[a + 2] = 10;
                         TamaNumList[a + 3] = 10;
-                        TamaNumList[a + 4] = 10;
                     }
                 }
                 else
                 {
-                    //4個消す
-                    Destroy(TamaSpawnedList[a]);
-                    Destroy(TamaSpawnedList[a + 1]);
-                    Destroy(TamaSpawnedList[a + 2]);
-                    Destroy(TamaSpawnedList[a + 3]);
-                    TamaNumList[a] = 10;
-                    TamaNumList[a + 1] = 10;
-                    TamaNumList[a + 2] = 10;
-                    TamaNumList[a + 3] = 10;
+                    //Nothing
                 }
+
             }
         }
 

@@ -34,6 +34,11 @@ public class GameLogic : MonoBehaviour
 
     void Start()
     {
+        Invoke("Initialize", 0.1f);
+    }
+
+    void Initialize ()
+    {
         TamaStart();
         NextTamaStart();
         StartCoroutine(TamaMoveClear());
@@ -1461,67 +1466,5 @@ public class GameLogic : MonoBehaviour
         
 
         StartCoroutine(TamaMoveClear());
-    }
-
-    //GameOver Check
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.gameObject.CompareTag("Tama"))
-        {
-            StartCoroutine(GameOverCheck());
-        }
-    }
-
-    //GameOver Check Coroutine
-    IEnumerator GameOverCheck()
-    {
-        yield return new WaitForSeconds(0.5f);
-
-        int a = 0;
-        int b = 1;
-        int c = 2;
-        int d = 3;
-        int e = 4;
-        int f = 5;
-        int g = 6;
-
-        if (TamaNumList[a] != 10 && TamaNumList[a + 7] != 10 && TamaNumList[a + 14] != 10 && TamaNumList[a + 21] != 10 && TamaNumList[a + 28] != 10 && TamaNumList[a + 35] != 10 && TamaNumList[a + 42] != 10 && TamaNumList[a + 49] != 10 && TamaNumList[a + 56] != 10 && TamaNumList[a + 63] != 10 && TamaNumList[a + 70] != 10)
-        {
-            GameOver();
-        }
-        else if(TamaNumList[b] != 10 && TamaNumList[b + 7] != 10 && TamaNumList[b + 14] != 10 && TamaNumList[b + 21] != 10 && TamaNumList[b + 28] != 10 && TamaNumList[b + 35] != 10 && TamaNumList[b + 42] != 10 && TamaNumList[b + 49] != 10 && TamaNumList[b + 56] != 10 && TamaNumList[b + 63] != 10 && TamaNumList[b + 70] != 10)
-        {
-            GameOver();
-        }
-        else if (TamaNumList[c] != 10 && TamaNumList[c + 7] != 10 && TamaNumList[c + 14] != 10 && TamaNumList[c + 21] != 10 && TamaNumList[c + 28] != 10 && TamaNumList[c + 35] != 10 && TamaNumList[c + 42] != 10 && TamaNumList[c + 49] != 10 && TamaNumList[c + 56] != 10 && TamaNumList[c + 63] != 10 && TamaNumList[c + 70] != 10)
-        {
-            GameOver();
-        }
-        else if (TamaNumList[d] != 10 && TamaNumList[d + 7] != 10 && TamaNumList[d + 14] != 10 && TamaNumList[d + 21] != 10 && TamaNumList[d + 28] != 10 && TamaNumList[d + 35] != 10 && TamaNumList[d + 42] != 10 && TamaNumList[d + 49] != 10 && TamaNumList[d + 56] != 10 && TamaNumList[d + 63] != 10 && TamaNumList[d + 70] != 10)
-        {
-            GameOver();
-        }
-        else if (TamaNumList[e] != 10 && TamaNumList[e + 7] != 10 && TamaNumList[e + 14] != 10 && TamaNumList[e + 21] != 10 && TamaNumList[e + 28] != 10 && TamaNumList[e + 35] != 10 && TamaNumList[e + 42] != 10 && TamaNumList[e + 49] != 10 && TamaNumList[e + 56] != 10 && TamaNumList[e + 63] != 10 && TamaNumList[e + 70] != 10)
-        {
-            GameOver();
-        }
-        else if (TamaNumList[f] != 10 && TamaNumList[f + 7] != 10 && TamaNumList[f + 14] != 10 && TamaNumList[f + 21] != 10 && TamaNumList[f + 28] != 10 && TamaNumList[f + 35] != 10 && TamaNumList[f + 42] != 10 && TamaNumList[f + 49] != 10 && TamaNumList[f + 56] != 10 && TamaNumList[f + 63] != 10 && TamaNumList[f + 70] != 10)
-        {
-            GameOver();
-        }
-        else if (TamaNumList[g] != 10 && TamaNumList[g + 7] != 10 && TamaNumList[g + 14] != 10 && TamaNumList[g + 21] != 10 && TamaNumList[g + 28] != 10 && TamaNumList[g + 35] != 10 && TamaNumList[g + 42] != 10 && TamaNumList[g + 49] != 10 && TamaNumList[g + 56] != 10 && TamaNumList[g + 63] != 10 && TamaNumList[g + 70] != 10)
-        {
-            GameOver();
-        }
-        else
-        {
-            //Nothing
-        }
-    }
-
-    //GameOver
-    void GameOver()
-    {
-        GameObject.Find("UILogic").GetComponent<GameUIManager>().PopupGameOverOpen();
     }
 }

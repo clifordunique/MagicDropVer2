@@ -5,9 +5,6 @@ using UnityEngine;
 public class GameOverLogic : MonoBehaviour
 {
     private const string TargetTag = "Tama";
-    private const int ColumnCount = 7;
-    private const int RowCount = 12;
-    private const int TamaNull = 10;
 
     [SerializeField] private GameLogic _gameLogic;
     [SerializeField] private GameUIManager _uiManager;
@@ -40,15 +37,16 @@ public class GameOverLogic : MonoBehaviour
     IEnumerator GameOverCheck()
     {
         yield return new WaitForSeconds(0.5f);
-        for (int column = 0; column < ColumnCount; column++)
+
+        for (int column = 0; column < GameLogic.ColumnCount; column++)
         {
             var isGameOver = true;
-            for (int row = 0; row < RowCount - 1; row++)
+            for (int row = 0; row < GameLogic.RowCount - 1; row++)
             {
-                var index = column + row * ColumnCount;
+                var index = column + row * GameLogic.ColumnCount;
                 Debug.Log(index);
 
-                if(_gameLogic.TamaNumList[index] == TamaNull)
+                if(_gameLogic.TamaNumList[index] == GameLogic.TamaNull)
                 {
                     isGameOver = false;
                     break;

@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class GameLogic : MonoBehaviour
 {
+    public const int ColumnCount = 7;
+    public const int RowCount = 12;
+    public const int TamaNull = 10;
     //Tama
     public float tamaSpeed;
     int carryNum;

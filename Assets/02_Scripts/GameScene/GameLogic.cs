@@ -16,6 +16,9 @@ public class GameLogic : MonoBehaviour
     bool checkCarry;      //true=carry   , false=not carry
     bool checkSelectTamaDelete;         //true=Delete   , false=not Delete
 
+    //Skill
+
+
     //List
     public List<Transform> TamaTransformList = new List<Transform>();
     public List<Transform> NextTamaTransformList = new List<Transform>();
@@ -1469,5 +1472,152 @@ public class GameLogic : MonoBehaviour
         
 
         StartCoroutine(TamaMoveClear());
+    }
+
+    //Skill
+    //Skill_bat
+    public void BtnSkillBat()
+    {
+        Debug.Log("Skill : Bat");
+    }
+
+    //Skill BottomDelete
+    public void BtnSkillBottomDelete()
+    {
+        for(int i = 0; i < 7; i++)
+        {
+            if(TamaNumList[i] == 10)
+            {
+
+            }
+            else if(TamaNumList[i] != 10)
+            {
+                //7個消す
+                Destroy(TamaSpawnedList[i]);
+                TamaNumList[i] = 10;
+            }
+        }
+        Debug.Log("Skill : BottomDelete");
+    }
+
+    //Skill Rocket
+    public void BtnSkillRocket()
+    {
+        int a = -1;
+        int b = -1;
+        int c = -1;
+        int d = -1;
+        int e = -1;
+
+        while(true)
+        {
+            if(a == -1)
+            {
+                int i = Random.Range(0, 84);
+
+                if(TamaNumList[i] == 10)
+                {
+                    //OneMore
+                }
+                else if(TamaNumList[i] != 10)
+                {
+                    a = i;
+                    Debug.Log("a : " + a);
+                }
+            }
+            else if(a != -1 && b == -1)
+            {
+                int i = Random.Range(0, 84);
+
+                if (TamaNumList[i] == 10 || i == a)
+                {
+                    //OneMore
+                }
+                else if (TamaNumList[i] != 10 && i != a)
+                {
+                    b = i;
+                    Debug.Log("b : " + b);
+                }
+            }
+            else if (a != -1 && b != -1 && c == -1)
+            {
+                int i = Random.Range(0, 84);
+
+                if (TamaNumList[i] == 10 || i == a || i == b)
+                {
+                    //OneMore
+                }
+                else if (TamaNumList[i] != 10 && i != a && i != b)
+                {
+                    c = i;
+                    Debug.Log("c : " + c);
+                }
+            }
+            else if (a != -1 && b != -1 && c != -1 && d == -1)
+            {
+                int i = Random.Range(0, 84);
+
+                if (TamaNumList[i] == 10 || i == a || i == b || i == c)
+                {
+                    //OneMore
+                }
+                else if (TamaNumList[i] != 10 && i != a && i != b && i != c)
+                {
+                    d = i;
+                    Debug.Log("d : " + d);
+                }
+            }
+            else if (a != -1 && b != -1 && c != -1 && d != -1 && e == -1)
+            {
+                int i = Random.Range(0, 84);
+
+                if (TamaNumList[i] == 10 || i == a || i == b || i == c || i == d)
+                {
+                    //OneMore
+                }
+                else if (TamaNumList[i] != 10 && i != a && i != b && i != c && i != d)
+                {
+                    e = i;
+                    Debug.Log("e : " + e);
+                }
+            }
+            else if(a != -1 && b != -1 && c != -1 && d != -1 && e != -1)
+            {
+                //5個消す
+                Destroy(TamaSpawnedList[a]);
+                Destroy(TamaSpawnedList[b]);
+                Destroy(TamaSpawnedList[c]);
+                Destroy(TamaSpawnedList[d]);
+                Destroy(TamaSpawnedList[e]);
+                TamaNumList[a] = 10;
+                TamaNumList[b] = 10;
+                TamaNumList[c] = 10;
+                TamaNumList[d] = 10;
+                TamaNumList[e] = 10;
+                break;
+            }
+
+            Debug.Log("Skill : Rocket");
+        }
+    }
+
+    //Skill Turtle
+    public void BtnSkillTurtle()
+    {
+        tamaSpeed = 0.5f;
+        Debug.Log("Skill : Turtle");
+    }
+
+    //Skill Stop
+    public void BtnSkillStop()
+    {
+        GameObject.Find("UILogic").GetComponent<GameUIManager>().SkillStop();
+        Debug.Log("Skill : Stop");
+    }
+
+    //Skill CharacterSkill
+    public void BtnSkillCharacterSkill()
+    {
+        Debug.Log("Skill : CharacterSkill");
     }
 }

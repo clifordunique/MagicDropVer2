@@ -12,9 +12,6 @@ public class PlayerLogic : MonoBehaviour
     //Check Can Drag
     bool checkCanDrag;
 
-
-
-
     void Awake()
     {
         ResetAll();
@@ -22,7 +19,7 @@ public class PlayerLogic : MonoBehaviour
 
     void Start()
     {
-        currentPos = this.gameObject.transform.position;
+        currentPos = gameObject.transform.position;
     }
 
     void Update()

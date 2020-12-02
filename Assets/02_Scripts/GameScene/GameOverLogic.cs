@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameOverLogic : MonoBehaviour
@@ -13,19 +12,11 @@ public class GameOverLogic : MonoBehaviour
     private void Start()
     {
         if (_gameLogic == null)
-        {
             _gameLogic = FindObjectOfType<GameLogic>();
-        }
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        
     }
 
     //GameOver Check
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag(TargetTag))
         {
@@ -34,7 +25,7 @@ public class GameOverLogic : MonoBehaviour
     }
 
     //GameOver Check Coroutine
-    IEnumerator GameOverCheck()
+    private IEnumerator GameOverCheck()
     {
         yield return new WaitForSeconds(0.5f);
 
@@ -61,7 +52,7 @@ public class GameOverLogic : MonoBehaviour
     }
 
     //GameOver
-    void GameOver()
+    private void GameOver()
     {
         _uiManager.PopupGameOverOpen();
     }

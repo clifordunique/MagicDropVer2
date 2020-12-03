@@ -1503,102 +1503,141 @@ public class GameLogic : MonoBehaviour
     //Skill Rocket
     public void BtnSkillRocket()
     {
-        int a = -1;
-        int b = -1;
-        int c = -1;
-        int d = -1;
-        int e = -1;
+        int listNum = 0;
 
-        while(true)
+        for(int i = 0; i < 84; i++)
         {
-            if(a == -1)
+            if(TamaNumList[i] != 10)
             {
-                int i = Random.Range(0, 84);
-
-                if(TamaNumList[i] == 10)
-                {
-                    //OneMore
-                }
-                else if(TamaNumList[i] != 10)
-                {
-                    a = i;
-                    Debug.Log("a : " + a);
-                }
+                listNum++;
             }
-            else if(a != -1 && b == -1)
+            else
             {
-                int i = Random.Range(0, 84);
-
-                if (TamaNumList[i] == 10 || i == a)
-                {
-                    //OneMore
-                }
-                else if (TamaNumList[i] != 10 && i != a)
-                {
-                    b = i;
-                    Debug.Log("b : " + b);
-                }
+                //Nothing
             }
-            else if (a != -1 && b != -1 && c == -1)
-            {
-                int i = Random.Range(0, 84);
-
-                if (TamaNumList[i] == 10 || i == a || i == b)
-                {
-                    //OneMore
-                }
-                else if (TamaNumList[i] != 10 && i != a && i != b)
-                {
-                    c = i;
-                    Debug.Log("c : " + c);
-                }
-            }
-            else if (a != -1 && b != -1 && c != -1 && d == -1)
-            {
-                int i = Random.Range(0, 84);
-
-                if (TamaNumList[i] == 10 || i == a || i == b || i == c)
-                {
-                    //OneMore
-                }
-                else if (TamaNumList[i] != 10 && i != a && i != b && i != c)
-                {
-                    d = i;
-                    Debug.Log("d : " + d);
-                }
-            }
-            else if (a != -1 && b != -1 && c != -1 && d != -1 && e == -1)
-            {
-                int i = Random.Range(0, 84);
-
-                if (TamaNumList[i] == 10 || i == a || i == b || i == c || i == d)
-                {
-                    //OneMore
-                }
-                else if (TamaNumList[i] != 10 && i != a && i != b && i != c && i != d)
-                {
-                    e = i;
-                    Debug.Log("e : " + e);
-                }
-            }
-            else if(a != -1 && b != -1 && c != -1 && d != -1 && e != -1)
-            {
-                //5個消す
-                Destroy(TamaSpawnedList[a]);
-                Destroy(TamaSpawnedList[b]);
-                Destroy(TamaSpawnedList[c]);
-                Destroy(TamaSpawnedList[d]);
-                Destroy(TamaSpawnedList[e]);
-                TamaNumList[a] = 10;
-                TamaNumList[b] = 10;
-                TamaNumList[c] = 10;
-                TamaNumList[d] = 10;
-                TamaNumList[e] = 10;
-                break;
-            }
-
-            Debug.Log("Skill : Rocket");
         }
+
+        
+        //残っている玉が5個以上
+        if (listNum >= 5)
+        {
+            int a = -1;
+            int b = -1;
+            int c = -1;
+            int d = -1;
+            int e = -1;
+
+            while (true)
+            {
+                if (a == -1)
+                {
+                    int i = Random.Range(0, 84);
+
+                    if (TamaNumList[i] == 10)
+                    {
+                        //OneMore
+                    }
+                    else if (TamaNumList[i] != 10)
+                    {
+                        a = i;
+                        Debug.Log("a : " + a);
+                    }
+                }
+                else if (a != -1 && b == -1)
+                {
+                    int i = Random.Range(0, 84);
+
+                    if (TamaNumList[i] == 10 || i == a)
+                    {
+                        //OneMore
+                    }
+                    else if (TamaNumList[i] != 10 && i != a)
+                    {
+                        b = i;
+                        Debug.Log("b : " + b);
+                    }
+                }
+                else if (a != -1 && b != -1 && c == -1)
+                {
+                    int i = Random.Range(0, 84);
+
+                    if (TamaNumList[i] == 10 || i == a || i == b)
+                    {
+                        //OneMore
+                    }
+                    else if (TamaNumList[i] != 10 && i != a && i != b)
+                    {
+                        c = i;
+                        Debug.Log("c : " + c);
+                    }
+                }
+                else if (a != -1 && b != -1 && c != -1 && d == -1)
+                {
+                    int i = Random.Range(0, 84);
+
+                    if (TamaNumList[i] == 10 || i == a || i == b || i == c)
+                    {
+                        //OneMore
+                    }
+                    else if (TamaNumList[i] != 10 && i != a && i != b && i != c)
+                    {
+                        d = i;
+                        Debug.Log("d : " + d);
+                    }
+                }
+                else if (a != -1 && b != -1 && c != -1 && d != -1 && e == -1)
+                {
+                    int i = Random.Range(0, 84);
+
+                    if (TamaNumList[i] == 10 || i == a || i == b || i == c || i == d)
+                    {
+                        //OneMore
+                    }
+                    else if (TamaNumList[i] != 10 && i != a && i != b && i != c && i != d)
+                    {
+                        e = i;
+                        Debug.Log("e : " + e);
+                    }
+                }
+                else if (a != -1 && b != -1 && c != -1 && d != -1 && e != -1)
+                {
+                    //5個消す
+                    Destroy(TamaSpawnedList[a]);
+                    Destroy(TamaSpawnedList[b]);
+                    Destroy(TamaSpawnedList[c]);
+                    Destroy(TamaSpawnedList[d]);
+                    Destroy(TamaSpawnedList[e]);
+                    TamaNumList[a] = 10;
+                    TamaNumList[b] = 10;
+                    TamaNumList[c] = 10;
+                    TamaNumList[d] = 10;
+                    TamaNumList[e] = 10;
+                    break;
+                }
+
+                Debug.Log("Skill : Rocket");
+            }
+        }
+        //残っている玉が5個以下
+        else if(listNum < 5)
+        {
+            //残り全部消す
+            for (int i = 0; i < 84; i++)
+            {
+                if (TamaNumList[i] != 10)
+                {
+                    Destroy(TamaSpawnedList[i]);
+                    TamaNumList[i] = 10;
+                }
+                else
+                {
+                    //Nothing
+                }
+            }
+        }
+
+
+        
     }
 
     //Skill Turtle

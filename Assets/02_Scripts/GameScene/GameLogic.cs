@@ -1519,15 +1519,15 @@ public class GameLogic : MonoBehaviour
     {
         for(int i = 0; i < 7; i++)
         {
-            if(TamaNumList[i] == 10)
+            if(TamaNumList[i] == TamaNull)
             {
 
             }
-            else if(TamaNumList[i] != 10)
+            else if(TamaNumList[i] != TamaNull)
             {
                 //7個消す
                 Destroy(TamaSpawnedList[i]);
-                TamaNumList[i] = 10;
+                TamaNumList[i] = TamaNull;
             }
         }
         Debug.Log("Skill : BottomDelete");
@@ -1540,7 +1540,7 @@ public class GameLogic : MonoBehaviour
 
         for(int i = 0; i < 84; i++)
         {
-            if(TamaNumList[i] != 10)
+            if(TamaNumList[i] != TamaNull)
             {
                 listNum++;
             }
@@ -1566,11 +1566,11 @@ public class GameLogic : MonoBehaviour
                 {
                     int i = Random.Range(0, 84);
 
-                    if (TamaNumList[i] == 10)
+                    if (TamaNumList[i] == TamaNull)
                     {
                         //OneMore
                     }
-                    else if (TamaNumList[i] != 10)
+                    else if (TamaNumList[i] != TamaNull)
                     {
                         a = i;
                         Debug.Log("a : " + a);
@@ -1580,11 +1580,11 @@ public class GameLogic : MonoBehaviour
                 {
                     int i = Random.Range(0, 84);
 
-                    if (TamaNumList[i] == 10 || i == a)
+                    if (TamaNumList[i] == TamaNull || i == a)
                     {
                         //OneMore
                     }
-                    else if (TamaNumList[i] != 10 && i != a)
+                    else if (TamaNumList[i] != TamaNull && i != a)
                     {
                         b = i;
                         Debug.Log("b : " + b);
@@ -1594,11 +1594,11 @@ public class GameLogic : MonoBehaviour
                 {
                     int i = Random.Range(0, 84);
 
-                    if (TamaNumList[i] == 10 || i == a || i == b)
+                    if (TamaNumList[i] == TamaNull || i == a || i == b)
                     {
                         //OneMore
                     }
-                    else if (TamaNumList[i] != 10 && i != a && i != b)
+                    else if (TamaNumList[i] != TamaNull && i != a && i != b)
                     {
                         c = i;
                         Debug.Log("c : " + c);
@@ -1608,11 +1608,11 @@ public class GameLogic : MonoBehaviour
                 {
                     int i = Random.Range(0, 84);
 
-                    if (TamaNumList[i] == 10 || i == a || i == b || i == c)
+                    if (TamaNumList[i] == TamaNull || i == a || i == b || i == c)
                     {
                         //OneMore
                     }
-                    else if (TamaNumList[i] != 10 && i != a && i != b && i != c)
+                    else if (TamaNumList[i] != TamaNull && i != a && i != b && i != c)
                     {
                         d = i;
                         Debug.Log("d : " + d);
@@ -1622,11 +1622,11 @@ public class GameLogic : MonoBehaviour
                 {
                     int i = Random.Range(0, 84);
 
-                    if (TamaNumList[i] == 10 || i == a || i == b || i == c || i == d)
+                    if (TamaNumList[i] == TamaNull || i == a || i == b || i == c || i == d)
                     {
                         //OneMore
                     }
-                    else if (TamaNumList[i] != 10 && i != a && i != b && i != c && i != d)
+                    else if (TamaNumList[i] != TamaNull && i != a && i != b && i != c && i != d)
                     {
                         e = i;
                         Debug.Log("e : " + e);
@@ -1657,10 +1657,10 @@ public class GameLogic : MonoBehaviour
             //残り全部消す
             for (int i = 0; i < 84; i++)
             {
-                if (TamaNumList[i] != 10)
+                if (TamaNumList[i] != TamaNull)
                 {
                     Destroy(TamaSpawnedList[i]);
-                    TamaNumList[i] = 10;
+                    TamaNumList[i] = TamaNull;
                 }
                 else
                 {

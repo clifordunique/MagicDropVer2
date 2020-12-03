@@ -19,6 +19,12 @@ public class GameUIManager : MonoBehaviour
     public GameObject objDrop_6;
     int receiveDropNum;
 
+    //Skill
+    bool checkSkill;    //true=On    , false=Off
+    public GameObject objSkillStopTime;
+    public Text textSkillStopTime;
+    int SkillStoptime;
+
     //GameOver
     public GameObject popupGameOver;
 
@@ -53,6 +59,11 @@ public class GameUIManager : MonoBehaviour
         objDrop_5.gameObject.SetActive(false);
         objDrop_6.gameObject.SetActive(false);
 
+        //Skill
+        checkSkill = false;
+        SkillStoptime = 16;
+        objSkillStopTime.gameObject.SetActive(false);
+
         //Popup
         popupGameOver.gameObject.SetActive(false);
     }
@@ -62,25 +73,71 @@ public class GameUIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
 
-        if(time == 0)
+        if(checkSkill == false)
         {
-            //Next Tama Drop
-            GameObject.Find("GameLogic").GetComponent<GameLogic>().NextTama();
+            if (time == 0)
+            {
+                //Next Tama Drop
+                GameObject.Find("GameLogic").GetComponent<GameLogic>().NextTama();
 
-            //Time Reset
-            time = 10;
+                //Time Reset
+                time = 10;
+            }
+            else
+            {
+                time--;
+            }
+            StartCoroutine(Timer10sec());
+        }
+        else if(checkSkill == true)
+        {
+            yield return new WaitForSeconds(15.0f);
+
+            checkSkill = false;
+            StartCoroutine(Timer10sec());
+        }
+
+    }
+
+    IEnumerator SkillStopCoroutine()
+    {
+        if (SkillStoptime == 0)
+        {
+            objSkillStopTime.gameObject.SetActive(false);
+            StopCoroutine(SkillStopCoroutine());
         }
         else
         {
-            time--;
+            SkillStoptime--;
+
+            yield return new WaitForSeconds(1.0f);
+
+            StartCoroutine(SkillStopCoroutine());
         }
-        StartCoroutine(Timer10sec());
+    }
+
+    //SKill On Off
+    public void SkillStop()
+    {
+        checkSkill = true;
+
+        SkillStoptime = 16;
+        objSkillStopTime.gameObject.SetActive(true);
+        StartCoroutine(SkillStopCoroutine());
+    }
+
+    //Stop Coruotine Timer10sec
+    public void StopTimer()
+    {
+        Debug.Log("Rocket");
+        StopCoroutine(Timer10sec());
     }
 
     //Timer Text Update      (void Update)
     void TimeTextUpdate()
     {
         textTime.text = time.ToString();
+        textSkillStopTime.text = SkillStoptime.ToString();
     }
 
     //Drop Position Check    (void Update)

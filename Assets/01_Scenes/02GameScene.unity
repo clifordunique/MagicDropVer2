@@ -7932,8 +7932,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SkillLogic, Assembly-CSharp
+      - m_Target: {fileID: 1998666594}
+        m_TargetAssemblyTypeName: GameLogic, Assembly-CSharp
         m_MethodName: BtnSkillBat
         m_Mode: 1
         m_Arguments:
@@ -9518,6 +9518,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tamaSpeed: 0
+  objTamaSelectBox: {fileID: 945969252}
+  _batTama: {fileID: 0}
   TamaTransformList:
   - {fileID: 622112323}
   - {fileID: 451736528}

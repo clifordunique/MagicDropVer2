@@ -18,7 +18,9 @@ public class GameLogic : MonoBehaviour
     bool checkSelectTamaDelete;         //true=Delete   , false=not Delete
 
     //Skill
-
+    bool checkSkillBat;   //true=can     , false=can't
+    public GameObject objTamaSelectBox;
+    [SerializeField] private GameObject _batTama;
 
     //List
     public List<Transform> TamaTransformList = new List<Transform>();
@@ -56,7 +58,18 @@ public class GameLogic : MonoBehaviour
 
     void Update()
     {
-        
+        if (checkSkillBat == true)
+        {
+            //Active Bat Skill
+            if (Input.GetMouseButtonDown(0))
+            {
+                SkillBat();
+            }
+        }
+        else
+        {
+            //Don't Active Bat Skill
+        }
     }
 
     //ResetAll          (void Awake)
@@ -69,6 +82,11 @@ public class GameLogic : MonoBehaviour
         receiveDropNum = 7;
         checkCarry = false;
         checkSelectTamaDelete = true;
+
+        //Skill
+        checkSkillBat = false;
+        _batTama = null;
+        objTamaSelectBox.gameObject.SetActive(true);
     }
 
     //ゲームが始まるとき、下端部の3つの列に生じる玉      (void Start)
@@ -1400,8 +1418,47 @@ public class GameLogic : MonoBehaviour
 
     //Skill
     //Skill_bat
+    void SkillBat()
+    {
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+        if (hit.collider != null)
+        {
+            _batTama = hit.collider.gameObject;
+            int i = GetGameObjectIndex(_batTama, TamaSpawnedList);
+
+            Destroy(TamaSpawnedList[i]);
+            TamaNumList[i] = TamaNull;
+            checkSkillBat = false;
+            objTamaSelectBox.gameObject.SetActive(true);
+        }
+    }
+
+    int GetGameObjectIndex(GameObject _batTama, List<GameObject> TamaSpawnedList)
+    {
+        if (TamaSpawnedList == null)
+            return -1;
+
+        if (TamaSpawnedList.Count <= 0)
+            return -1;
+
+        for (int i = 0; i < TamaSpawnedList.Count; i++)
+        {
+            if (TamaSpawnedList[i] == _batTama)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     public void BtnSkillBat()
     {
+        _batTama = null;
+        checkSkillBat = true;
+        objTamaSelectBox.gameObject.SetActive(false);
         Debug.Log("Skill : Bat");
     }
 

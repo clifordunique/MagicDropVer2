@@ -241,38 +241,11 @@ public class GameLogic : MonoBehaviour
     //TamaDrop
     public void TamaDrop()
     {
-        if(checkCarry == true)
+        if (checkCarry == true)
         {
-            if(TamaNumList[63] == TamaNull && TamaNumList[64] == TamaNull && TamaNumList[65] == TamaNull && TamaNumList[66] == TamaNull && TamaNumList[67] == TamaNull && TamaNumList[68] == TamaNull && TamaNumList[69] == TamaNull)
+            if (TamaNumList[63] == TamaNull && TamaNumList[64] == TamaNull && TamaNumList[65] == TamaNull && TamaNumList[66] == TamaNull && TamaNumList[67] == TamaNull && TamaNumList[68] == TamaNull && TamaNumList[69] == TamaNull)
             {
-                receiveDropNum = _playerLogic.dropNum;
-
-                switch (receiveDropNum)
-                {
-                    case 0:
-                        receiveDropNum = 63;
-                        break;
-                    case 1:
-                        receiveDropNum = 64;
-                        break;
-                    case 2:
-                        receiveDropNum = 65;
-                        break;
-                    case 3:
-                        receiveDropNum = 66;
-                        break;
-                    case 4:
-                        receiveDropNum = 67;
-                        break;
-                    case 5:
-                        receiveDropNum = 68;
-                        break;
-                    case 6:
-                        receiveDropNum = 69;
-                        break;
-                    case 7:
-                        break;
-                }
+                receiveDropNum = _playerLogic.dropNum < 7 ? _playerLogic.dropNum + 63 : _playerLogic.dropNum;
 
                 Transform targetPoint = TamaTransformList[receiveDropNum];
                 GameObject newTama = Instantiate(TamaKindList[carryNum]);
@@ -280,36 +253,9 @@ public class GameLogic : MonoBehaviour
                 TamaSpawnedList[receiveDropNum] = newTama;
                 TamaNumList[receiveDropNum] = carryNum;
             }
-            else if(TamaNumList[70] == TamaNull && TamaNumList[71] == TamaNull && TamaNumList[72] == TamaNull && TamaNumList[73] == TamaNull && TamaNumList[74] == TamaNull && TamaNumList[75] == TamaNull && TamaNumList[76] == TamaNull)
+            else if (TamaNumList[70] == TamaNull && TamaNumList[71] == TamaNull && TamaNumList[72] == TamaNull && TamaNumList[73] == TamaNull && TamaNumList[74] == TamaNull && TamaNumList[75] == TamaNull && TamaNumList[76] == TamaNull)
             {
-                receiveDropNum = _playerLogic.dropNum;
-
-                switch(receiveDropNum)
-                {
-                    case 0:
-                        receiveDropNum = 70;
-                        break;
-                    case 1:
-                        receiveDropNum = 71;
-                        break;
-                    case 2:
-                        receiveDropNum = 72;
-                        break;
-                    case 3:
-                        receiveDropNum = 73;
-                        break;
-                    case 4:
-                        receiveDropNum = 74;
-                        break;
-                    case 5:
-                        receiveDropNum = 75;
-                        break;
-                    case 6:
-                        receiveDropNum = 76;
-                        break;
-                    case 7:
-                        break;
-                }
+                receiveDropNum = _playerLogic.dropNum < 7 ? _playerLogic.dropNum + 70 : _playerLogic.dropNum;
 
                 Transform targetPoint = TamaTransformList[receiveDropNum];
                 GameObject newTama = Instantiate(TamaKindList[carryNum]);
@@ -321,34 +267,7 @@ public class GameLogic : MonoBehaviour
             {
                 if (TamaNumList[77] == TamaNull && TamaNumList[78] == TamaNull && TamaNumList[79] == TamaNull && TamaNumList[80] == TamaNull && TamaNumList[81] == TamaNull && TamaNumList[82] == TamaNull && TamaNumList[83] == TamaNull)
                 {
-                    receiveDropNum = _playerLogic.dropNum;
-
-                    switch (receiveDropNum)
-                    {
-                        case 0:
-                            receiveDropNum = 77;
-                            break;
-                        case 1:
-                            receiveDropNum = 78;
-                            break;
-                        case 2:
-                            receiveDropNum = 79;
-                            break;
-                        case 3:
-                            receiveDropNum = 80;
-                            break;
-                        case 4:
-                            receiveDropNum = 81;
-                            break;
-                        case 5:
-                            receiveDropNum = 82;
-                            break;
-                        case 6:
-                            receiveDropNum = 83;
-                            break;
-                        case 7:
-                            break;
-                    }
+                    receiveDropNum = _playerLogic.dropNum < 7 ? _playerLogic.dropNum + 77 : _playerLogic.dropNum;
 
                     Transform targetPoint = TamaTransformList[receiveDropNum];
                     GameObject newTama = Instantiate(TamaKindList[carryNum]);

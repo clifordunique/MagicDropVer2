@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameLogic : MonoBehaviour
@@ -29,6 +30,7 @@ public class GameLogic : MonoBehaviour
     public List<GameObject> TamaCarryList = new List<GameObject>();
     public List<int> TamaNumList = new List<int>();
     public List<int> NextTamaNumList = new List<int>();
+    public List<List<int>> ClearDropList = new List<List<int>>();
     //List
 
     void Awake()
@@ -45,7 +47,7 @@ public class GameLogic : MonoBehaviour
     {
         TamaStart();
         NextTamaStart();
-        StartCoroutine(TamaMoveClear());
+        StartCoroutine(UpdateDrops());
     }
 
     void Update()
@@ -489,16 +491,35 @@ public class GameLogic : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 玉を削除
+    /// </summary>
+    void ClearDrops()
+    {
+        for (int i = 0; i < ClearDropList.Count; i++)
+        {
+            var drops = ClearDropList[i];
+            foreach (var dropIndex in drops)
+            {
+                Destroy(TamaSpawnedList[dropIndex]);
+                TamaNumList[dropIndex] = TamaNull;
+            }
+            drops.Clear();
+        }
+        ClearDropList.Clear();
+    }
+
     //TamaMove & Clear Coroutone                 (void Start)
-    IEnumerator TamaMoveClear()
+    IEnumerator UpdateDrops()
     {
         yield return TamaMove();
 
         CheckTamaClearHorizontal();
         CheckTamaClearVertical();
+        ClearDrops();
 
         // roop
-        StartCoroutine(TamaMoveClear());
+        StartCoroutine(UpdateDrops());
     }
 
     //Move (Tama Fall.)
@@ -586,10 +607,11 @@ public class GameLogic : MonoBehaviour
                 if (TamaMinChainCount <= chainCount)
                 {
                     Debug.Log($"{chainStrings}");
+                    ClearDropList.Add(new List<int>());
+                    var lastList = ClearDropList.Last();
                     for (var ch = targetIndex; ch < targetIndex + chainCount; ch++)
                     {
-                        Destroy(TamaSpawnedList[ch]);
-                        TamaNumList[ch] = TamaNull;
+                        lastList.Add(ch);
                     }
                     break;
                 }
@@ -1497,11 +1519,12 @@ public class GameLogic : MonoBehaviour
                 }
 
                 //4個消す
+                ClearDropList.Add(new List<int>());
+                var lastList = ClearDropList.Last();
                 for (var v = 0; v < 4; v++)
                 {
                     var removeIndex = i + v * ColumnCount;
-                    Destroy(TamaSpawnedList[removeIndex]);
-                    TamaNumList[removeIndex] = TamaNull;
+                    lastList.Add(removeIndex);
                 }
             }
         }

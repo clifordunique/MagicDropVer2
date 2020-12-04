@@ -494,7 +494,7 @@ public class GameLogic : MonoBehaviour
     {
         yield return TamaMove();
 
-        CheckTamaClearHorizonal();
+        CheckTamaClearHorizontal();
         CheckTamaClearVertical();
 
         // roop
@@ -536,7 +536,7 @@ public class GameLogic : MonoBehaviour
     /// <summary>
     /// Check Tama Clear.
     /// </summary>
-    void CheckTamaClearHorizonal()
+    void CheckTamaClearHorizontal()
     {
         // 縦方向
         for (var v = 0; v < RowCount - 1; v++)

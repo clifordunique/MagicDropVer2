@@ -501,8 +501,11 @@ public class GameLogic : MonoBehaviour
             var drops = ClearDropList[i];
             foreach (var dropIndex in drops)
             {
-                Destroy(TamaSpawnedList[dropIndex]);
-                TamaNumList[dropIndex] = TamaNull;
+                var tama = TamaSpawnedList[dropIndex];
+                tama.GetComponent<TamaLogic>().Splash(() =>
+                {
+                    TamaNumList[dropIndex] = TamaNull;
+                });
             }
             drops.Clear();
         }

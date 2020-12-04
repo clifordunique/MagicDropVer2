@@ -33,9 +33,13 @@ public class GameLogic : MonoBehaviour
     public List<List<int>> ClearDropList = new List<List<int>>();
     //List
 
+    private PlayerLogic _playerLogic;
+
     void Awake()
     {
         ResetAll();
+
+        _playerLogic = GameObject.Find("Player").GetComponent<PlayerLogic>();
     }
 
     void Start()
@@ -123,7 +127,7 @@ public class GameLogic : MonoBehaviour
         //新しく次の玉1列を生じる
         for (int i = 0; i < 7; i++)
         {
-            int z = (Random.Range(0, 4));
+            var z = Random.Range(0, 4);
 
             Transform targetPoint = NextTamaTransformList[i];
             GameObject newTama = Instantiate(TamaKindList[z]);
@@ -133,13 +137,12 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    //TamaSelectButton (OnpointerDown)
-    public void BtnOnpointer_0()
+    private void BtnOnpointer(int index)
     {
-        if(TamaNumList[0] != TamaNull)
+        if (TamaNumList[index] != TamaNull)
         {
-            carryNum = TamaNumList[0];
-            selectNum = 0;
+            carryNum = TamaNumList[index];
+            selectNum = index;
             checkCarry = true;
 
             //OnMouseDrag
@@ -149,153 +152,52 @@ public class GameLogic : MonoBehaviour
         {
 
         }
+    }
+
+    //TamaSelectButton (OnpointerDown)
+    public void BtnOnpointer_0()
+    {
+        BtnOnpointer(0);
     }
 
     public void BtnOnpointer_1()
     {
-        if (TamaNumList[1] != TamaNull)
-        {
-            carryNum = TamaNumList[1];
-            selectNum = 1;
-            checkCarry = true;
-
-            //OnMouseDrag
-            OnMouseDrag();
-        }
-        else
-        {
-
-        }
+        BtnOnpointer(1);
     }
 
     public void BtnOnpointer_2()
     {
-        if (TamaNumList[2] != TamaNull)
-        {
-            carryNum = TamaNumList[2];
-            selectNum = 2;
-            checkCarry = true;
-
-            //OnMouseDrag
-            OnMouseDrag();
-        }
-        else
-        {
-
-        }
+        BtnOnpointer(2);
     }
 
     public void BtnOnpointer_3()
     {
-        if (TamaNumList[3] != TamaNull)
-        {
-            carryNum = TamaNumList[3];
-            selectNum = 3;
-            checkCarry = true;
-
-            //OnMouseDrag
-            OnMouseDrag();
-        }
-        else
-        {
-
-        }
+        BtnOnpointer(3);
     }
 
     public void BtnOnpointer_4()
     {
-        if (TamaNumList[4] != TamaNull)
-        {
-            carryNum = TamaNumList[4];
-            selectNum = 4;
-            checkCarry = true;
-
-            //OnMouseDrag
-            OnMouseDrag();
-        }
-        else
-        {
-
-        }
+        BtnOnpointer(4);
     }
 
     public void BtnOnpointer_5()
     {
-        if (TamaNumList[5] != TamaNull)
-        {
-            carryNum = TamaNumList[5];
-            selectNum = 5;
-            checkCarry = true;
-
-            //OnMouseDrag
-            OnMouseDrag();
-        }
-        else
-        {
-
-        }
+        BtnOnpointer(5);
     }
 
     public void BtnOnpointer_6()
     {
-        if (TamaNumList[6] != TamaNull)
-        {
-            carryNum = TamaNumList[6];
-            selectNum = 6;
-            checkCarry = true;
-
-            //OnMouseDrag
-            OnMouseDrag();
-        }
-        else
-        {
-
-        }
+        BtnOnpointer(6);
     }
 
     //Drag
     public void OnMouseDrag()
     {
-        if(checkCarry == true)
+        if (checkCarry == true)
         {
-            switch(selectNum)
-            {
-                case 0:
-                    //New Tama Create
-                    GameObject carryTama0 = Instantiate(TamaSelectKindList[carryNum], new Vector3(-2.4f, -2.9f, 0), Quaternion.identity);
-                    TamaCarryList[0] = carryTama0;
-                    break;
-                case 1:
-                    //New Tama Create
-                    GameObject carryTama1 = Instantiate(TamaSelectKindList[carryNum], new Vector3(-1.6f, -2.9f, 0), Quaternion.identity);
-                    TamaCarryList[0] = carryTama1;
-                    break;
-                case 2:
-                    //New Tama Create
-                    GameObject carryTama2 = Instantiate(TamaSelectKindList[carryNum], new Vector3(-0.8f, -2.9f, 0), Quaternion.identity);
-                    TamaCarryList[0] = carryTama2;
-                    break;
-                case 3:
-                    //New Tama Create
-                    GameObject carryTama3 = Instantiate(TamaSelectKindList[carryNum], new Vector3(0.0f, -2.9f, 0), Quaternion.identity);
-                    TamaCarryList[0] = carryTama3;
-                    break;
-                case 4:
-                    //New Tama Create
-                    GameObject carryTama4 = Instantiate(TamaSelectKindList[carryNum], new Vector3(0.8f, -2.9f, 0), Quaternion.identity);
-                    TamaCarryList[0] = carryTama4;
-                    break;
-                case 5:
-                    //New Tama Create
-                    GameObject carryTama5 = Instantiate(TamaSelectKindList[carryNum], new Vector3(1.6f, -2.9f, 0), Quaternion.identity);
-                    TamaCarryList[0] = carryTama5;
-                    break;
-                case 6:
-                    //New Tama Create
-                    GameObject carryTama6 = Instantiate(TamaSelectKindList[carryNum], new Vector3(2.4f, -2.9f, 0), Quaternion.identity);
-                    TamaCarryList[0] = carryTama6;
-                    break;
-            }
+            var vecX = -2.4f + (selectNum * 0.8f);
+            var carryTama = Instantiate(TamaSelectKindList[carryNum], new Vector3(vecX, -2.9f, 0), Quaternion.identity);
+            TamaCarryList[0] = carryTama;
         }
         else
         {
@@ -306,46 +208,11 @@ public class GameLogic : MonoBehaviour
     //下端部の選んだ玉を消す
     public void SelectTamaDelete()
     {
-        if(checkSelectTamaDelete == true)
+        if (checkSelectTamaDelete == true)
         {
-            switch (selectNum)
-            {
-                case 0:
-                    Destroy(TamaSpawnedList[0]);
-                    TamaNumList[0] = TamaNull;
-                    checkSelectTamaDelete = false;
-                    break;
-                case 1:
-                    Destroy(TamaSpawnedList[1]);
-                    TamaNumList[1] = TamaNull;
-                    checkSelectTamaDelete = false;
-                    break;
-                case 2:
-                    Destroy(TamaSpawnedList[2]);
-                    TamaNumList[2] = TamaNull;
-                    checkSelectTamaDelete = false;
-                    break;
-                case 3:
-                    Destroy(TamaSpawnedList[3]);
-                    TamaNumList[3] = TamaNull;
-                    checkSelectTamaDelete = false;
-                    break;
-                case 4:
-                    Destroy(TamaSpawnedList[4]);
-                    TamaNumList[4] = TamaNull;
-                    checkSelectTamaDelete = false;
-                    break;
-                case 5:
-                    Destroy(TamaSpawnedList[5]);
-                    TamaNumList[5] = TamaNull;
-                    checkSelectTamaDelete = false;
-                    break;
-                case 6:
-                    Destroy(TamaSpawnedList[6]);
-                    TamaNumList[6] = TamaNull;
-                    checkSelectTamaDelete = false;
-                    break;
-            }
+            Destroy(TamaSpawnedList[selectNum]);
+            TamaNumList[selectNum] = TamaNull;
+            checkSelectTamaDelete = false;
         }
         else
         {
@@ -360,8 +227,7 @@ public class GameLogic : MonoBehaviour
         {
             if(TamaNumList[63] == TamaNull && TamaNumList[64] == TamaNull && TamaNumList[65] == TamaNull && TamaNumList[66] == TamaNull && TamaNumList[67] == TamaNull && TamaNumList[68] == TamaNull && TamaNumList[69] == TamaNull)
             {
-                PlayerLogic playerlogic = GameObject.Find("Player").GetComponent<PlayerLogic>();
-                receiveDropNum = playerlogic.dropNum;
+                receiveDropNum = _playerLogic.dropNum;
 
                 switch (receiveDropNum)
                 {
@@ -398,8 +264,7 @@ public class GameLogic : MonoBehaviour
             }
             else if(TamaNumList[70] == TamaNull && TamaNumList[71] == TamaNull && TamaNumList[72] == TamaNull && TamaNumList[73] == TamaNull && TamaNumList[74] == TamaNull && TamaNumList[75] == TamaNull && TamaNumList[76] == TamaNull)
             {
-                PlayerLogic playerlogic = GameObject.Find("Player").GetComponent<PlayerLogic>();
-                receiveDropNum = playerlogic.dropNum;
+                receiveDropNum = _playerLogic.dropNum;
 
                 switch(receiveDropNum)
                 {
@@ -438,8 +303,7 @@ public class GameLogic : MonoBehaviour
             {
                 if (TamaNumList[77] == TamaNull && TamaNumList[78] == TamaNull && TamaNumList[79] == TamaNull && TamaNumList[80] == TamaNull && TamaNumList[81] == TamaNull && TamaNumList[82] == TamaNull && TamaNumList[83] == TamaNull)
                 {
-                    PlayerLogic playerlogic = GameObject.Find("Player").GetComponent<PlayerLogic>();
-                    receiveDropNum = playerlogic.dropNum;
+                    receiveDropNum = _playerLogic.dropNum;
 
                     switch (receiveDropNum)
                     {
@@ -476,8 +340,9 @@ public class GameLogic : MonoBehaviour
                 }
             }
 
-            GameObject.Find("Player").GetComponent<PlayerLogic>().DragOff();
-            GameObject.Find("Player").GetComponent<PlayerLogic>().ResetAll();
+            _playerLogic.DragOff();
+            _playerLogic.ResetAll();
+
             Destroy(TamaCarryList[0]);
             carryNum = TamaNull;
             selectNum = TamaNull;

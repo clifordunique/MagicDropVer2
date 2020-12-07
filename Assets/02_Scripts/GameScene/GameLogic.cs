@@ -9,6 +9,8 @@ public class GameLogic : MonoBehaviour
     public const int RowCount = 12;
     public const int TamaNull = 10;
     public const int TamaMinChainCount = 4;
+    private const int DropLineFirst = 63;
+
     //Tama
     public float tamaSpeed;
     int carryNum;
@@ -220,7 +222,7 @@ public class GameLogic : MonoBehaviour
         {
             var vecX = -2.4f + (selectNum * 0.8f);
             var carryTama = Instantiate(TamaSelectKindList[carryNum], new Vector3(vecX, -2.9f, 0), Quaternion.identity);
-            TamaCarryList[0] = carryTama;
+            TamaCarryList.Add(carryTama);
         }
         else
         {
@@ -248,44 +250,29 @@ public class GameLogic : MonoBehaviour
     {
         if (checkCarry == true)
         {
-            if (TamaNumList[63] == TamaNull && TamaNumList[64] == TamaNull && TamaNumList[65] == TamaNull && TamaNumList[66] == TamaNull && TamaNumList[67] == TamaNull && TamaNumList[68] == TamaNull && TamaNumList[69] == TamaNull)
+            if (_playerLogic.dropNum < ColumnCount)
             {
-                receiveDropNum = _playerLogic.dropNum < 7 ? _playerLogic.dropNum + 63 : _playerLogic.dropNum;
-
-                Transform targetPoint = TamaTransformList[receiveDropNum];
-                GameObject newTama = Instantiate(TamaKindList[carryNum]);
-                newTama.transform.position = targetPoint.position;
-                TamaSpawnedList[receiveDropNum] = newTama;
-                TamaNumList[receiveDropNum] = carryNum;
-            }
-            else if (TamaNumList[70] == TamaNull && TamaNumList[71] == TamaNull && TamaNumList[72] == TamaNull && TamaNumList[73] == TamaNull && TamaNumList[74] == TamaNull && TamaNumList[75] == TamaNull && TamaNumList[76] == TamaNull)
-            {
-                receiveDropNum = _playerLogic.dropNum < 7 ? _playerLogic.dropNum + 70 : _playerLogic.dropNum;
-
-                Transform targetPoint = TamaTransformList[receiveDropNum];
-                GameObject newTama = Instantiate(TamaKindList[carryNum]);
-                newTama.transform.position = targetPoint.position;
-                TamaSpawnedList[receiveDropNum] = newTama;
-                TamaNumList[receiveDropNum] = carryNum;
-            }
-            else
-            {
-                if (TamaNumList[77] == TamaNull && TamaNumList[78] == TamaNull && TamaNumList[79] == TamaNull && TamaNumList[80] == TamaNull && TamaNumList[81] == TamaNull && TamaNumList[82] == TamaNull && TamaNumList[83] == TamaNull)
+                for (var v = 0; v < 2; v++)
                 {
-                    receiveDropNum = _playerLogic.dropNum < 7 ? _playerLogic.dropNum + 77 : _playerLogic.dropNum;
-
-                    Transform targetPoint = TamaTransformList[receiveDropNum];
-                    GameObject newTama = Instantiate(TamaKindList[carryNum]);
-                    newTama.transform.position = targetPoint.position;
-                    TamaSpawnedList[receiveDropNum] = newTama;
-                    TamaNumList[receiveDropNum] = carryNum;
+                    var receiveDropNum = (DropLineFirst + v * ColumnCount) + _playerLogic.dropNum;
+                    if (TamaNumList[receiveDropNum] == TamaNull)
+                    {
+                        var targetPoint = TamaTransformList[receiveDropNum];
+                        var newTama = Instantiate(TamaKindList[carryNum]);
+                        newTama.transform.position = targetPoint.position;
+                        TamaSpawnedList[receiveDropNum] = newTama;
+                        TamaNumList[receiveDropNum] = carryNum;
+                        break;
+                    }
                 }
             }
 
             _playerLogic.DragOff();
             _playerLogic.ResetAll();
-
-            Destroy(TamaCarryList[0]);
+            for (var i = 0; i < TamaCarryList.Count; i++)
+            {
+                Destroy(TamaCarryList[i]);
+            }
             carryNum = TamaNull;
             selectNum = TamaNull;
             receiveDropNum = 7;

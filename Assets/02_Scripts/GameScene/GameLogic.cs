@@ -319,8 +319,8 @@ public class GameLogic : MonoBehaviour
         }
         else if (GameSettings.ClearMode  == DropClearMode.Chain)
         {
-            ClearDrops();
         }
+        ClearDrops();
         // roop
         StartCoroutine(UpdateDrops());
     }

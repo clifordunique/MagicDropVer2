@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using MagicDrop;
 
 public class GameLogic : MonoBehaviour
 {
@@ -311,10 +312,15 @@ public class GameLogic : MonoBehaviour
     {
         yield return TamaMove();
 
-        CheckTamaClearHorizontal();
-        CheckTamaClearVertical();
-        ClearDrops();
-
+        if (GameSettings.ClearMode  == DropClearMode.Line)
+        {
+            CheckTamaClearHorizontal();
+            CheckTamaClearVertical();
+        }
+        else if (GameSettings.ClearMode  == DropClearMode.Chain)
+        {
+            ClearDrops();
+        }
         // roop
         StartCoroutine(UpdateDrops());
     }
@@ -352,6 +358,15 @@ public class GameLogic : MonoBehaviour
     }
 
     /// <summary>
+    /// Drop Clear Logic
+    /// </summary>
+    /// <returns></returns>
+    private bool CheckClearDrops ()
+    {
+        return true;
+    }
+
+    /// <summary>
     /// Check Tama Clear.
     /// </summary>
     void CheckTamaClearHorizontal()
@@ -371,12 +386,13 @@ public class GameLogic : MonoBehaviour
                 var limitCount = (v + 1) * ColumnCount;
                 var chainStrings = $"[{v}:{h}] ({targetTama}) [{targetIndex}]";
 
-                if (targetIndex < ColumnCount)
+                for (var ch = targetIndex + 1; ch < limitCount; ch++)
                 {
-                    for (var ch = targetIndex + 1; ch < limitCount; ch++)
+                    var isChained = targetTama != TamaNull && targetTama == TamaNumList[ch];
+                    if (targetIndex < ColumnCount)
                     {
                         // 連結しているならカウントアップ
-                        if (targetTama != TamaNull && targetTama == TamaNumList[ch])
+                        if (isChained)
                         {
                             chainCount++;
                             chainStrings += $" | [{ch}]";
@@ -384,13 +400,10 @@ public class GameLogic : MonoBehaviour
                         else
                             break;
                     }
-                }
-                else
-                {
-                    for (var ch = targetIndex + 1; ch < limitCount; ch++)
+                    else
                     {
                         // 連結しているならカウントアップ
-                        if (targetTama != TamaNull && targetTama == TamaNumList[ch] && TamaNumList[ch - ColumnCount] != TamaNull)
+                        if (isChained && TamaNumList[ch - ColumnCount] != TamaNull)
                         {
                             chainCount++;
                             chainStrings += $" | [{ch}]";

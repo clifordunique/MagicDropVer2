@@ -21,6 +21,8 @@ public class GameLogic : MonoBehaviour
     bool checkSkillBat;   //true=can     , false=can't
     public GameObject objTamaSelectBox;
     [SerializeField] private GameObject _batTama;
+    [SerializeField] private GameUIManager _uiManager;
+    bool checkTurtleSkill;  //true=slow   , false=normal
 
     //List
     public List<Transform> TamaTransformList = new List<Transform>();
@@ -70,6 +72,8 @@ public class GameLogic : MonoBehaviour
         {
             //Don't Active Bat Skill
         }
+
+        TurtlrSkill();
     }
 
     //ResetAll          (void Awake)
@@ -87,6 +91,7 @@ public class GameLogic : MonoBehaviour
         checkSkillBat = false;
         _batTama = null;
         objTamaSelectBox.gameObject.SetActive(true);
+        checkTurtleSkill = false;
     }
 
     //ゲームが始まるとき、下端部の3つの列に生じる玉      (void Start)
@@ -469,10 +474,16 @@ public class GameLogic : MonoBehaviour
             _batTama = hit.collider.gameObject;
             int i = GetGameObjectIndex(_batTama, TamaSpawnedList);
 
-            Destroy(TamaSpawnedList[i]);
-            TamaNumList[i] = TamaNull;
+            //Destroy & Effect
+            _batTama.GetComponent<TamaLogic>().Splash(() =>
+            {
+                TamaNumList[i] = TamaNull;
+            });
+
+            //Reset
             checkSkillBat = false;
             objTamaSelectBox.gameObject.SetActive(true);
+            _uiManager.SkillBatOff();
         }
     }
 
@@ -665,8 +676,28 @@ public class GameLogic : MonoBehaviour
     //Skill Turtle
     public void BtnSkillTurtle()
     {
-        tamaSpeed = 0.5f;
+        if (checkTurtleSkill == true)
+        {
+            checkTurtleSkill = false;
+        }
+        else if (checkTurtleSkill == false)
+        {
+            checkTurtleSkill = true;
+        }
+
         Debug.Log("Skill : Turtle");
+    }
+
+    void TurtlrSkill()                 //void update
+    {
+        if (checkTurtleSkill == true)
+        {
+            tamaSpeed = 0.6f;
+        }
+        else if (checkTurtleSkill == false)
+        {
+            tamaSpeed = 0.4f;
+        }
     }
 
     //Skill Stop

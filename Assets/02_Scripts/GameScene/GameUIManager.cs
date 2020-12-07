@@ -24,6 +24,14 @@ public class GameUIManager : MonoBehaviour
     public GameObject objSkillStopTime;
     public Text textSkillStopTime;
     int SkillStoptime;
+    public GameObject objSkillBatOn;
+    public GameObject objSkillRocketOn;
+    public GameObject objSkillTurtleOn;
+    public GameObject objSkillStopOn;
+    bool skillBat;
+    bool skillRocket;
+    bool skillTurtle;
+    bool skillStop;
 
     //GameOver
     public GameObject popupGameOver;
@@ -44,6 +52,7 @@ public class GameUIManager : MonoBehaviour
     {
         TimeTextUpdate();
         DropPositionCheck();
+        CheckSkillActive();
     }
 
     //ResetAll         (void Awake)
@@ -63,6 +72,14 @@ public class GameUIManager : MonoBehaviour
         checkSkill = false;
         SkillStoptime = 16;
         objSkillStopTime.gameObject.SetActive(false);
+        objSkillBatOn.gameObject.SetActive(false);
+        objSkillRocketOn.gameObject.SetActive(false);
+        objSkillTurtleOn.gameObject.SetActive(false);
+        objSkillStopOn.gameObject.SetActive(false);
+        skillBat = false;
+        skillRocket = false;
+        skillTurtle = false;
+        skillStop = false;
 
         //Popup
         popupGameOver.gameObject.SetActive(false);
@@ -124,6 +141,77 @@ public class GameUIManager : MonoBehaviour
         SkillStoptime = 16;
         objSkillStopTime.gameObject.SetActive(true);
         StartCoroutine(SkillStopCoroutine());
+    }
+
+    //Skill                            (void Update)
+    void CheckSkillActive()
+    {
+        //Bat
+        if (skillBat == true)
+        {
+            objSkillBatOn.gameObject.SetActive(true);
+        }
+        else if (skillBat == false)
+        {
+            objSkillBatOn.gameObject.SetActive(false);
+        }
+
+        //Rocket
+        if (skillRocket == true)
+        {
+            objSkillRocketOn.gameObject.SetActive(true);
+        }
+        else if (skillRocket == false)
+        {
+            objSkillRocketOn.gameObject.SetActive(false);
+        }
+
+        //Turtle
+        if (skillTurtle == true)
+        {
+            objSkillTurtleOn.gameObject.SetActive(true);
+        }
+        else if (skillTurtle == false)
+        {
+            objSkillTurtleOn.gameObject.SetActive(false);
+        }
+
+        //Stop
+        if (skillStop == true)
+        {
+            objSkillStopOn.gameObject.SetActive(true);
+        }
+        else if (skillStop == false)
+        {
+            objSkillStopOn.gameObject.SetActive(false);
+        }
+    }
+
+    public void BtnSkillBatOn()
+    {
+        skillBat = true;
+    }
+
+    public void SkillBatOff()
+    {
+        skillBat = false;
+    }
+
+    public void BtnSkillTurtle()
+    {
+        if (skillTurtle == true)
+        {
+            skillTurtle = false;
+        }
+        else if (skillTurtle == false)
+        {
+            skillTurtle = true;
+        }
+    }
+
+    public void BtnSkillStop()
+    {
+        skillStop = true;
     }
 
     //Stop Coruotine Timer10sec

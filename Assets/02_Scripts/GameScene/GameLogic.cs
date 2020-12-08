@@ -517,10 +517,7 @@ public class GameLogic : MonoBehaviour
     //Skill BottomDelete
     public void BtnSkillBottomDelete()
     {
-        ClearDropList.Add(new List<int>());
-        var lastList = ClearDropList.Last();
-
-        for (int i = 0; i < 7; i++)
+        for(int i = 0; i < 7; i++)
         {
             if(TamaNumList[i] == TamaNull)
             {
@@ -528,26 +525,11 @@ public class GameLogic : MonoBehaviour
             }
             else if(TamaNumList[i] != TamaNull)
             {
-                lastList.Add(i);
+                //7個消す
+                Destroy(TamaSpawnedList[i]);
+                TamaNumList[i] = TamaNull;
             }
         }
-        
-        //削除
-        for (int i = 0; i < ClearDropList.Count; i++)
-        {
-            var drops = ClearDropList[i];
-            foreach (var dropIndex in drops)
-            {
-                var tama = TamaSpawnedList[dropIndex];
-                tama.GetComponent<TamaLogic>().Splash(() =>
-                {
-                    TamaNumList[dropIndex] = TamaNull;
-                });
-            }
-            drops.Clear();
-        }
-        ClearDropList.Clear();
-
         Debug.Log("Skill : BottomDelete");
     }
 
@@ -568,9 +550,7 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        ClearDropList.Add(new List<int>());
-        var lastList = ClearDropList.Last();
-
+        
         //残っている玉が5個以上
         if (listNum >= 5)
         {
@@ -593,7 +573,6 @@ public class GameLogic : MonoBehaviour
                     else if (TamaNumList[i] != TamaNull)
                     {
                         a = i;
-                        lastList.Add(a);
                         Debug.Log("a : " + a);
                     }
                 }
@@ -608,7 +587,6 @@ public class GameLogic : MonoBehaviour
                     else if (TamaNumList[i] != TamaNull && i != a)
                     {
                         b = i;
-                        lastList.Add(b);
                         Debug.Log("b : " + b);
                     }
                 }
@@ -623,7 +601,6 @@ public class GameLogic : MonoBehaviour
                     else if (TamaNumList[i] != TamaNull && i != a && i != b)
                     {
                         c = i;
-                        lastList.Add(c);
                         Debug.Log("c : " + c);
                     }
                 }
@@ -638,7 +615,6 @@ public class GameLogic : MonoBehaviour
                     else if (TamaNumList[i] != TamaNull && i != a && i != b && i != c)
                     {
                         d = i;
-                        lastList.Add(d);
                         Debug.Log("d : " + d);
                     }
                 }
@@ -653,12 +629,22 @@ public class GameLogic : MonoBehaviour
                     else if (TamaNumList[i] != TamaNull && i != a && i != b && i != c && i != d)
                     {
                         e = i;
-                        lastList.Add(e);
                         Debug.Log("e : " + e);
                     }
                 }
                 else if (a != -1 && b != -1 && c != -1 && d != -1 && e != -1)
                 {
+                    //5個消す
+                    Destroy(TamaSpawnedList[a]);
+                    Destroy(TamaSpawnedList[b]);
+                    Destroy(TamaSpawnedList[c]);
+                    Destroy(TamaSpawnedList[d]);
+                    Destroy(TamaSpawnedList[e]);
+                    TamaNumList[a] = 10;
+                    TamaNumList[b] = 10;
+                    TamaNumList[c] = 10;
+                    TamaNumList[d] = 10;
+                    TamaNumList[e] = 10;
                     break;
                 }
 
@@ -673,7 +659,8 @@ public class GameLogic : MonoBehaviour
             {
                 if (TamaNumList[i] != TamaNull)
                 {
-                    lastList.Add(i);
+                    Destroy(TamaSpawnedList[i]);
+                    TamaNumList[i] = TamaNull;
                 }
                 else
                 {
@@ -682,22 +669,8 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        //削除
-        for (int i = 0; i < ClearDropList.Count; i++)
-        {
-            var drops = ClearDropList[i];
-            foreach (var dropIndex in drops)
-            {
-                var tama = TamaSpawnedList[dropIndex];
-                tama.GetComponent<TamaLogic>().Splash(() =>
-                {
-                    TamaNumList[dropIndex] = TamaNull;
-                });
-            }
-            drops.Clear();
-        }
-        ClearDropList.Clear();
 
+        
     }
 
     //Skill Turtle

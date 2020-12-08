@@ -35,9 +35,7 @@ public class GameOverLogic : MonoBehaviour
             for (int row = 0; row < GameLogic.RowCount - 1; row++)
             {
                 var index = column + row * GameLogic.ColumnCount;
-                Debug.Log(index);
-
-                if(_gameLogic.TamaNumList[index] == GameLogic.TamaNull)
+                if (_gameLogic.TamaNumList[index] == GameLogic.TamaNull)
                 {
                     isGameOver = false;
                     break;
@@ -46,7 +44,7 @@ public class GameOverLogic : MonoBehaviour
             if (isGameOver == true)
             {
                 GameOver();
-                break; 
+                break;
             }
         }
     }

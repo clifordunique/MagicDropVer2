@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using MagicDrop;
+using UniRx;
+using System;
 
 public class GameLogic : MonoBehaviour
 {
@@ -54,7 +56,7 @@ public class GameLogic : MonoBehaviour
         Invoke("Initialize", 0.1f);
     }
 
-    void Initialize ()
+    void Initialize()
     {
         TamaStart();
         NextTamaStart();
@@ -100,9 +102,9 @@ public class GameLogic : MonoBehaviour
     //ゲームが始まるとき、下端部の3つの列に生じる玉      (void Start)
     void TamaStart()
     {
-        for(int i = 0; i < 21; i++)
+        for (int i = 0; i < 21; i++)
         {
-            int z = (Random.Range(0, 4));
+            int z = (UnityEngine.Random.Range(0, 4));
 
             Transform targetPoint = TamaTransformList[i];
             GameObject newTama = Instantiate(TamaKindList[z]);
@@ -117,7 +119,7 @@ public class GameLogic : MonoBehaviour
     {
         for (int i = 0; i < 7; i++)
         {
-            int z = (Random.Range(0, 4));
+            int z = (UnityEngine.Random.Range(0, 4));
 
             Transform targetPoint = NextTamaTransformList[i];
             GameObject newTama = Instantiate(TamaKindList[z]);
@@ -153,7 +155,7 @@ public class GameLogic : MonoBehaviour
         //新しく次の玉1列を生じる
         for (int i = 0; i < 7; i++)
         {
-            var z = Random.Range(0, 4);
+            var z = UnityEngine.Random.Range(0, 4);
 
             Transform targetPoint = NextTamaTransformList[i];
             GameObject newTama = Instantiate(TamaKindList[z]);
@@ -163,7 +165,7 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    private void BtnOnpointer(int index)
+    private void BtnOnPointer(int index)
     {
         if (TamaNumList[index] != TamaNull)
         {
@@ -183,37 +185,37 @@ public class GameLogic : MonoBehaviour
     //TamaSelectButton (OnpointerDown)
     public void BtnOnpointer_0()
     {
-        BtnOnpointer(0);
+        BtnOnPointer(0);
     }
 
     public void BtnOnpointer_1()
     {
-        BtnOnpointer(1);
+        BtnOnPointer(1);
     }
 
     public void BtnOnpointer_2()
     {
-        BtnOnpointer(2);
+        BtnOnPointer(2);
     }
 
     public void BtnOnpointer_3()
     {
-        BtnOnpointer(3);
+        BtnOnPointer(3);
     }
 
     public void BtnOnpointer_4()
     {
-        BtnOnpointer(4);
+        BtnOnPointer(4);
     }
 
     public void BtnOnpointer_5()
     {
-        BtnOnpointer(5);
+        BtnOnPointer(5);
     }
 
     public void BtnOnpointer_6()
     {
-        BtnOnpointer(6);
+        BtnOnPointer(6);
     }
 
     //Drag
@@ -286,47 +288,31 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 玉を削除
-    /// </summary>
-    void ClearDrops()
-    {
-        for (int i = 0; i < ClearDropList.Count; i++)
-        {
-            var drops = ClearDropList[i];
-            foreach (var dropIndex in drops)
-            {
-                var tama = TamaSpawnedList[dropIndex];
-                tama.GetComponent<TamaLogic>().Splash(() =>
-                {
-                    TamaNumList[dropIndex] = TamaNull;
-                });
-            }
-            drops.Clear();
-        }
-        ClearDropList.Clear();
-    }
-
     //TamaMove & Clear Coroutone                 (void Start)
     IEnumerator UpdateDrops()
     {
         yield return TamaMove();
 
-        if (GameSettings.ClearMode  == DropClearMode.Line)
+        if (GameSettings.ClearMode == DropClearMode.Line)
         {
             CheckTamaClearHorizontal();
             CheckTamaClearVertical();
+
+            ClearDrops();
         }
-        else if (GameSettings.ClearMode  == DropClearMode.Chain)
+        else if (GameSettings.ClearMode == DropClearMode.Chain)
         {
+            if (CheckClearDrops())
+                ClearDrops();
+
         }
-        ClearDrops();
-        // roop
+
+        // UpdateDrops Loops
         StartCoroutine(UpdateDrops());
     }
 
     //Move (Tama Fall.)
-    IEnumerator TamaMove ()
+    IEnumerator TamaMove()
     {
         for (int i = 0; i < 77; i++)
         {
@@ -358,12 +344,114 @@ public class GameLogic : MonoBehaviour
     }
 
     /// <summary>
+    /// 玉を削除
+    /// </summary>
+    void ClearDrops()
+    {
+        for (int i = 0; i < ClearDropList.Count; i++)
+        {
+            var drops = ClearDropList[i];
+            foreach (var dropIndex in drops)
+            {
+                var tama = TamaSpawnedList[dropIndex];
+                tama.GetComponent<TamaLogic>().Splash(() =>
+                {
+                    TamaNumList[dropIndex] = TamaNull;
+                });
+            }
+            drops.Clear();
+        }
+        ClearDropList.Clear();
+    }
+
+    /// <summary>
     /// Drop Clear Logic
     /// </summary>
     /// <returns></returns>
-    private bool CheckClearDrops ()
+    private bool CheckClearDrops()
     {
-        return true;
+        // 列ごとに確認
+        for (var h = 0; h < ColumnCount; h++)
+        {
+            // 上からチェックする
+            // 上から落下させるため、各列の１番上が消えるため
+            for (var v = RowCount - 1; 0 < v; v--)
+            {
+                var dropIndex = v * ColumnCount + h;
+                var dropTarget = TamaNumList[dropIndex];
+                if (dropTarget != TamaNull)
+                {
+                    // 消されるドロップリストにない
+                    if (ClearDropList.Find(list => list.Contains(dropIndex)) == null)
+                    {
+                        var checkCell = new List<List<int>>(ColumnCount);
+                        for (var i = 0; i < ColumnCount; i++)
+                        {
+                            var checkRow = new List<int>(v);
+                            for (var j = 0; j <= v; j++)
+                            {
+                                var index = i * ColumnCount + j;
+                                checkRow.Add(TamaNumList[index] == TamaNull ? TamaNull : -1); //チェックしない : 未チェック
+                            }
+                            checkCell.Add(checkRow);
+                        }
+                        CheckDropRecursive(h, v, dropTarget, checkCell);
+
+                        if (TamaMinChainCount <= checkCell.Sum(x => x.Count<int>(y => y == 1)))
+                        {
+                            var debugLog = "AnyChained" + $"{(dropTarget)}";
+                            Debug.Log(debugLog);
+
+                            var chainedList = new List<int>();
+
+                            for (var i = 0; i < checkCell.Count; i++)
+                            {
+                                for (var j = 0; j < checkCell[i].Count; j++)
+                                {
+                                    if (checkCell[i][j] == 1)
+                                    {
+                                        chainedList.Add(j * ColumnCount + i);
+                                    }
+                                }
+                            }
+                            ClearDropList.Add(chainedList);
+                        }
+                    }
+
+                    // var chainedList = CheckChainDropList(dropIndex, dropTarget, checkCell);
+                    // if (chainedList != null)
+                    // {
+                    //     
+                    // }
+                }
+            }
+        }
+        return 0 < ClearDropList.Count;
+    }
+
+    private void CheckDropRecursive(int x, int y, int dropTratget, List<List<int>> checkCell)
+    {
+        if (checkCell.Count <= x || checkCell[x].Count <= y || 0 < checkCell[x][y]) return; //範囲外か探索済み
+
+        var index = y * ColumnCount + x;
+        if (TamaNumList[index] != dropTratget)
+        {
+            //ブロックの種類が違う
+            checkCell[x][y] = 2;
+            return;
+        }
+        //一致
+        checkCell[x][y] = 1; //チェック
+
+        if (x < checkCell.Count - 1)
+            CheckDropRecursive(x + 1, y, dropTratget, checkCell); //右探索
+        if (0 < x)
+            CheckDropRecursive(x - 1, y, dropTratget, checkCell); //左
+        if (y < checkCell[x].Count - 1)
+            CheckDropRecursive(x, y + 1, dropTratget, checkCell); //下
+        if (0 < y)
+            CheckDropRecursive(x, y - 1, dropTratget, checkCell); //上
+        return;
     }
 
     /// <summary>
@@ -517,13 +605,13 @@ public class GameLogic : MonoBehaviour
     //Skill BottomDelete
     public void BtnSkillBottomDelete()
     {
-        for(int i = 0; i < 7; i++)
+        for (int i = 0; i < 7; i++)
         {
-            if(TamaNumList[i] == TamaNull)
+            if (TamaNumList[i] == TamaNull)
             {
 
             }
-            else if(TamaNumList[i] != TamaNull)
+            else if (TamaNumList[i] != TamaNull)
             {
                 //7個消す
                 Destroy(TamaSpawnedList[i]);
@@ -538,9 +626,9 @@ public class GameLogic : MonoBehaviour
     {
         int listNum = 0;
 
-        for(int i = 0; i < 84; i++)
+        for (int i = 0; i < 84; i++)
         {
-            if(TamaNumList[i] != TamaNull)
+            if (TamaNumList[i] != TamaNull)
             {
                 listNum++;
             }
@@ -550,7 +638,7 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        
+
         //残っている玉が5個以上
         if (listNum >= 5)
         {
@@ -564,7 +652,7 @@ public class GameLogic : MonoBehaviour
             {
                 if (a == -1)
                 {
-                    int i = Random.Range(0, 84);
+                    int i = UnityEngine.Random.Range(0, 84);
 
                     if (TamaNumList[i] == TamaNull)
                     {
@@ -578,7 +666,7 @@ public class GameLogic : MonoBehaviour
                 }
                 else if (a != -1 && b == -1)
                 {
-                    int i = Random.Range(0, 84);
+                    int i = UnityEngine.Random.Range(0, 84);
 
                     if (TamaNumList[i] == TamaNull || i == a)
                     {
@@ -592,7 +680,7 @@ public class GameLogic : MonoBehaviour
                 }
                 else if (a != -1 && b != -1 && c == -1)
                 {
-                    int i = Random.Range(0, 84);
+                    int i = UnityEngine.Random.Range(0, 84);
 
                     if (TamaNumList[i] == TamaNull || i == a || i == b)
                     {
@@ -606,7 +694,7 @@ public class GameLogic : MonoBehaviour
                 }
                 else if (a != -1 && b != -1 && c != -1 && d == -1)
                 {
-                    int i = Random.Range(0, 84);
+                    int i = UnityEngine.Random.Range(0, 84);
 
                     if (TamaNumList[i] == TamaNull || i == a || i == b || i == c)
                     {
@@ -620,7 +708,7 @@ public class GameLogic : MonoBehaviour
                 }
                 else if (a != -1 && b != -1 && c != -1 && d != -1 && e == -1)
                 {
-                    int i = Random.Range(0, 84);
+                    int i = UnityEngine.Random.Range(0, 84);
 
                     if (TamaNumList[i] == TamaNull || i == a || i == b || i == c || i == d)
                     {
@@ -652,7 +740,7 @@ public class GameLogic : MonoBehaviour
             }
         }
         //残っている玉が5個以下
-        else if(listNum < 5)
+        else if (listNum < 5)
         {
             //残り全部消す
             for (int i = 0; i < 84; i++)
@@ -670,7 +758,7 @@ public class GameLogic : MonoBehaviour
         }
 
 
-        
+
     }
 
     //Skill Turtle

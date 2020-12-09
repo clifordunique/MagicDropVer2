@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerLogic : MonoBehaviour
 {
     Vector3 currentPos;
+    Vector3 mousePos;
 
     //Drop Number -> Drop Position    7=null(reset)
     public int dropNum;
@@ -70,50 +71,83 @@ public class PlayerLogic : MonoBehaviour
             }
 
             transform.position = Camera.main.ViewportToWorldPoint(pos);
-        }
-        else if (checkCanDrag == false)
-        {
 
-        }
-    }
+            //Drop Position Check
+            mousePos = gameObject.transform.position;
+            Debug.Log(mousePos);
 
-    //Player Drop Position Check
-    public void OnTriggerStay2D(Collider2D other)
-    {
-        if (checkCanDrag == true)
-        {
-            if (other.gameObject.CompareTag("Drop_0"))
+            if (mousePos.x < -2.0)
             {
                 dropNum = 0;
             }
-            else if (other.gameObject.CompareTag("Drop_1"))
+            else if (mousePos.x >= -2.0 && mousePos.x < -1.2)
             {
                 dropNum = 1;
             }
-            else if (other.gameObject.CompareTag("Drop_2"))
+            else if (mousePos.x >= -1.2 && mousePos.x < -0.4)
             {
                 dropNum = 2;
             }
-            else if (other.gameObject.CompareTag("Drop_3"))
+            else if (mousePos.x >= -0.4 && mousePos.x < 0.4)
             {
                 dropNum = 3;
             }
-            else if (other.gameObject.CompareTag("Drop_4"))
+            else if (mousePos.x >= 0.4 && mousePos.x < 1.2)
             {
                 dropNum = 4;
             }
-            else if (other.gameObject.CompareTag("Drop_5"))
+            else if (mousePos.x >= 1.2 && mousePos.x < 2.0)
             {
                 dropNum = 5;
             }
-            else if (other.gameObject.CompareTag("Drop_6"))
+            else if (mousePos.x >= 2.0)
             {
                 dropNum = 6;
             }
         }
-        else
+        else if (checkCanDrag == false)
         {
             dropNum = 7;
         }
     }
+
+    ////Player Drop Position Check
+    //public void OnTriggerStay2D(Collider2D other)
+    //{
+    //    if (checkCanDrag == true)
+    //    {
+    //        if (other.gameObject.CompareTag("Drop_0"))
+    //        {
+    //            //dropNum = 0;
+    //        }
+    //        else if (other.gameObject.CompareTag("Drop_1"))
+    //        {
+    //            //dropNum = 1;
+    //        }
+    //        else if (other.gameObject.CompareTag("Drop_2"))
+    //        {
+    //            //dropNum = 2;
+    //        }
+    //        else if (other.gameObject.CompareTag("Drop_3"))
+    //        {
+    //            dropNum = 3;
+    //        }
+    //        else if (other.gameObject.CompareTag("Drop_4"))
+    //        {
+    //            dropNum = 4;
+    //        }
+    //        else if (other.gameObject.CompareTag("Drop_5"))
+    //        {
+    //            dropNum = 5;
+    //        }
+    //        else if (other.gameObject.CompareTag("Drop_6"))
+    //        {
+    //            dropNum = 6;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        dropNum = 7;
+    //    }
+    //}
 }

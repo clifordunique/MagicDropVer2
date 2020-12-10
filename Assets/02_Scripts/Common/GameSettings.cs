@@ -1,24 +1,24 @@
 namespace MagicDrop
 {
-    public enum DropClearMode
+    public enum DropClearRule
     {
         Line, Chain,
     }
 
-    public enum DropAppearanceMode
+    public enum DropCreateMode
     {
         Top, Bottom,
     }
 
-    public enum DropClearTimingMode
+    public enum DropClearTiming
     {
-        Update, Fell,
+        Always, Dropped,
     }
 
     public static class GameSettings
     {
-        public static DropClearMode ClearMode = DropClearMode.Line;
-        public static DropAppearanceMode AppearanceMode = DropAppearanceMode.Top;
-        public static DropClearTimingMode ClearTimingMode = DropClearTimingMode.Update;
+        public static DropClearRule ClearRule = DropClearRule.Chain;
+        public static DropCreateMode CreateMode = DropCreateMode.Top;
+        public static DropClearTiming ClearTiming = DropClearTiming.Always;
     }
 }

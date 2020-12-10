@@ -183,40 +183,13 @@ public class GameLogic : MonoBehaviour
     }
 
     //TamaSelectButton (OnpointerDown)
-    public void BtnOnpointer_0()
-    {
-        BtnOnPointer(0);
-    }
-
-    public void BtnOnpointer_1()
-    {
-        BtnOnPointer(1);
-    }
-
-    public void BtnOnpointer_2()
-    {
-        BtnOnPointer(2);
-    }
-
-    public void BtnOnpointer_3()
-    {
-        BtnOnPointer(3);
-    }
-
-    public void BtnOnpointer_4()
-    {
-        BtnOnPointer(4);
-    }
-
-    public void BtnOnpointer_5()
-    {
-        BtnOnPointer(5);
-    }
-
-    public void BtnOnpointer_6()
-    {
-        BtnOnPointer(6);
-    }
+    public void BtnOnpointer_0() => BtnOnPointer(0);
+    public void BtnOnpointer_1() => BtnOnPointer(1);
+    public void BtnOnpointer_2() => BtnOnPointer(2);
+    public void BtnOnpointer_3() => BtnOnPointer(3);
+    public void BtnOnpointer_4() => BtnOnPointer(4);
+    public void BtnOnpointer_5() => BtnOnPointer(5);
+    public void BtnOnpointer_6() => BtnOnPointer(6);
 
     //Drag
     public void OnMouseDrag()
@@ -293,14 +266,14 @@ public class GameLogic : MonoBehaviour
     {
         yield return TamaMove();
 
-        if (GameSettings.ClearMode == DropClearMode.Line)
+        if (GameSettings.ClearRule == DropClearRule.Line)
         {
             CheckTamaClearHorizontal();
             CheckTamaClearVertical();
 
             ClearDrops();
         }
-        else if (GameSettings.ClearMode == DropClearMode.Chain)
+        else if (GameSettings.ClearRule == DropClearRule.Chain)
         {
             if (CheckClearDrops())
                 ClearDrops();
@@ -370,71 +343,93 @@ public class GameLogic : MonoBehaviour
     /// <returns></returns>
     private bool CheckClearDrops()
     {
-        // 列ごとに確認
+        var chainCheckedList = new List<List<int>>();
         for (var h = 0; h < ColumnCount; h++)
         {
-            // 上からチェックする
-            // 上から落下させるため、各列の１番上が消えるため
-            for (var v = RowCount - 1; 0 < v; v--)
+            for (var v = 0; v < RowCount - 1; v++)
             {
                 var dropIndex = v * ColumnCount + h;
                 var dropTarget = TamaNumList[dropIndex];
-                if (dropTarget != TamaNull)
+                
+                if (dropTarget == TamaNull) continue;
+                // すでにチェック済みなら　Next
+                if (chainCheckedList.Find(list => list.Contains(dropIndex)) != null) continue;
+                
+                var checkCell = new List<List<int>>(ColumnCount);
+                for (var column = 0; column < ColumnCount; column++)
                 {
-                    // 消されるドロップリストにない
-                    if (ClearDropList.Find(list => list.Contains(dropIndex)) == null)
+                    var row = new List<int>(v);
+                    for (var rowIndex = 0; rowIndex < RowCount - 1; rowIndex++)
                     {
-                        var checkCell = new List<List<int>>(ColumnCount);
-                        for (var i = 0; i < ColumnCount; i++)
-                        {
-                            var checkRow = new List<int>(v);
-                            for (var j = 0; j <= v; j++)
-                            {
-                                var index = i * ColumnCount + j;
-                                checkRow.Add(TamaNumList[index] == TamaNull ? TamaNull : -1); //チェックしない : 未チェック
-                            }
-                            checkCell.Add(checkRow);
-                        }
-                        CheckDropRecursive(h, v, dropTarget, checkCell);
-
-                        if (TamaMinChainCount <= checkCell.Sum(x => x.Count<int>(y => y == 1)))
-                        {
-                            var debugLog = "AnyChained" + $"{(dropTarget)}";
-                            Debug.Log(debugLog);
-
-                            var chainedList = new List<int>();
-
-                            for (var i = 0; i < checkCell.Count; i++)
-                            {
-                                for (var j = 0; j < checkCell[i].Count; j++)
-                                {
-                                    if (checkCell[i][j] == 1)
-                                    {
-                                        chainedList.Add(j * ColumnCount + i);
-                                    }
-                                }
-                            }
-                            ClearDropList.Add(chainedList);
-                        }
+                        var index = rowIndex * ColumnCount + column;
+                        row.Add(TamaNumList[index] == TamaNull ? TamaNull : -1); //チェックしない : 未チェック
                     }
 
-                    // var chainedList = CheckChainDropList(dropIndex, dropTarget, checkCell);
-                    // if (chainedList != null)
-                    // {
-                    //     
-                    // }
+                    checkCell.Add(row);
                 }
+
+                // チェック
+                CheckDropRecursive(h, v, dropTarget, checkCell);
+
+                var checkedChainedList = new List<int>();
+                for (var column = 0; column < checkCell.Count; column++)
+                {
+                    var rowCell = checkCell[column];
+                    for (var row = 0; row < rowCell.Count; row++)
+                    {
+                        var value = rowCell[row];
+                        if (value != 1) continue;
+                        
+                        var targetIndex = row * ColumnCount + column;
+                        checkedChainedList.Add(targetIndex);
+                    }
+                }
+
+                var chainedStr = "";
+                checkCell.ForEach(x => x.ForEach(y => { chainedStr += $"[{y}]"; }));
+                if (1 < checkedChainedList.Count)
+                {
+                    chainCheckedList.Add(checkedChainedList);
+                }
+
+                if (checkedChainedList.Count < TamaMinChainCount) continue;
+                        
+                var debugLog = "AnyChained" + $"{(dropTarget)}";
+                Debug.Log(debugLog);
+
+                var chainedList = new List<int>();
+                for (var i = 0; i < checkCell.Count; i++)
+                {
+                    for (var j = 0; j < checkCell[i].Count; j++)
+                    {
+                        if (checkCell[i][j] == 1)
+                        {
+
+                            chainedList.Add(j * ColumnCount + i);
+                        }
+                    }
+                }
+
+                chainedList.ForEach(chain => debugLog += $"[{chain}]");
+                Debug.Log($"{debugLog}");
+                ClearDropList.Add(chainedList);
+
+                // var chainedList = CheckChainDropList(dropIndex, dropTarget, checkCell);
+                // if (chainedList != null)
+                // {
+                //     
+                // }
             }
         }
         return 0 < ClearDropList.Count;
     }
 
-    private void CheckDropRecursive(int x, int y, int dropTratget, List<List<int>> checkCell)
+    private void CheckDropRecursive(int x, int y, int dropTarget, List<List<int>> checkCell)
     {
-        if (checkCell.Count <= x || checkCell[x].Count <= y || 0 < checkCell[x][y]) return; //範囲外か探索済み
+        if (x < 0 || y < 0 || checkCell.Count <= x || checkCell[x].Count <= y || 0 < checkCell[x][y]) return; //範囲外か探索済み
 
         var index = y * ColumnCount + x;
-        if (TamaNumList[index] != dropTratget)
+        if (TamaNumList[index] != dropTarget)
         {
             //ブロックの種類が違う
             checkCell[x][y] = 2;
@@ -443,15 +438,10 @@ public class GameLogic : MonoBehaviour
         //一致
         checkCell[x][y] = 1; //チェック
 
-        if (x < checkCell.Count - 1)
-            CheckDropRecursive(x + 1, y, dropTratget, checkCell); //右探索
-        if (0 < x)
-            CheckDropRecursive(x - 1, y, dropTratget, checkCell); //左
-        if (y < checkCell[x].Count - 1)
-            CheckDropRecursive(x, y + 1, dropTratget, checkCell); //下
-        if (0 < y)
-            CheckDropRecursive(x, y - 1, dropTratget, checkCell); //上
-        return;
+        CheckDropRecursive(x + 1, y, dropTarget, checkCell); //右探索
+        CheckDropRecursive(x - 1, y, dropTarget, checkCell); //左
+        CheckDropRecursive(x, y + 1, dropTarget, checkCell); //上
+        CheckDropRecursive(x, y - 1, dropTarget, checkCell); //下
     }
 
     /// <summary>
@@ -702,7 +692,7 @@ public class GameLogic : MonoBehaviour
                 }
                 else if (a != -1 && b != -1 && c == -1)
                 {
-                    int i = Random.Range(0, 84);
+                    int i = UnityEngine.Random.Range(0, 84);
 
                     if (TamaNumList[i] == TamaNull || i == a || i == b)
                     {
@@ -717,7 +707,7 @@ public class GameLogic : MonoBehaviour
                 }
                 else if (a != -1 && b != -1 && c != -1 && d == -1)
                 {
-                    int i = Random.Range(0, 84);
+                    int i = UnityEngine.Random.Range(0, 84);
 
                     if (TamaNumList[i] == TamaNull || i == a || i == b || i == c)
                     {

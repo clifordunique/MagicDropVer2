@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using MagicDrop;
 using UnityEngine;
 
 public class LobbyLogic : MonoBehaviour
@@ -24,7 +25,9 @@ public class LobbyLogic : MonoBehaviour
 
     void Update()
     {
-        
+        GameSettings.ClearRule = clearRule ? DropClearRule.Line : DropClearRule.Chain;
+        GameSettings.ClearTiming = clearTiming ? DropClearTiming.Always : DropClearTiming.Dropped;
+        GameSettings.CreateMode = tamaCreate ? DropCreateMode.Top : DropCreateMode.Bottom;
     }
 
     //ResetAll               (void Awake)
@@ -73,5 +76,6 @@ public class LobbyLogic : MonoBehaviour
         {
             tamaCreate = true;
         }
+
     }
 }

@@ -21,6 +21,7 @@ public class GameLogic : MonoBehaviour
     int receiveDropNum;
     bool checkCarry;      //true=carry   , false=not carry
     bool checkSelectTamaDelete;         //true=Delete   , false=not Delete
+    bool tamaMove;        //true=move    , false=stop
 
     //Skill
     bool checkSkillBat;   //true=can     , false=can't
@@ -91,6 +92,7 @@ public class GameLogic : MonoBehaviour
         receiveDropNum = 7;
         checkCarry = false;
         checkSelectTamaDelete = true;
+        tamaMove = true;
 
         //Skill
         checkSkillBat = false;
@@ -137,31 +139,89 @@ public class GameLogic : MonoBehaviour
 
     IEnumerator NextTamaCoroutine()
     {
-        //準備できている次の玉1列を下げる
-        for (int i = 0; i < 7; i++)
+        if (GameSettings.CreateMode == DropCreateMode.Top)
         {
-            Transform targetPoint = TamaTransformList[i + 70];
-            GameObject newTama = Instantiate(TamaKindList[NextTamaNumList[i]]);
-            newTama.transform.position = targetPoint.position;
-            TamaSpawnedList[i + 70] = newTama;
-            TamaNumList[i + 70] = NextTamaNumList[i];
+            //準備できている次の玉1列を下げる
+            for (int i = 0; i < 7; i++)
+            {
+                Transform targetPoint = TamaTransformList[i + 70];
+                GameObject newTama = Instantiate(TamaKindList[NextTamaNumList[i]]);
+                newTama.transform.position = targetPoint.position;
+                TamaSpawnedList[i + 70] = newTama;
+                TamaNumList[i + 70] = NextTamaNumList[i];
 
-            Destroy(NextTamaList[i]);
-            NextTamaNumList[i] = TamaNull;
+                Destroy(NextTamaList[i]);
+                NextTamaNumList[i] = TamaNull;
+            }
+
+            yield return new WaitForSeconds(0.2f);
+
+            //新しく次の玉1列を生じる
+            for (int i = 0; i < 7; i++)
+            {
+                var z = UnityEngine.Random.Range(0, 4);
+
+                Transform targetPoint = NextTamaTransformList[i];
+                GameObject newTama = Instantiate(TamaKindList[z]);
+                newTama.transform.position = targetPoint.position;
+                NextTamaList[i] = newTama;
+                NextTamaNumList[i] = z;
+            }
         }
-
-        yield return new WaitForSeconds(0.2f);
-
-        //新しく次の玉1列を生じる
-        for (int i = 0; i < 7; i++)
+        else if(GameSettings.CreateMode == DropCreateMode.Bottom)
         {
-            var z = UnityEngine.Random.Range(0, 4);
+            //TamaMove Stop
+            tamaMove = false;
 
-            Transform targetPoint = NextTamaTransformList[i];
-            GameObject newTama = Instantiate(TamaKindList[z]);
-            newTama.transform.position = targetPoint.position;
-            NextTamaList[i] = newTama;
-            NextTamaNumList[i] = z;
+                  //既に生じている玉を全部一個づつ上に上げる
+            for(int i = 69; i > 6; i--)
+            {
+                if(TamaNumList[i - 7] != TamaNull)
+                {
+                    Transform targetPoint = TamaTransformList[i];
+                    GameObject newTama = Instantiate(TamaKindList[TamaNumList[i - 7]]);
+                    newTama.transform.position = targetPoint.position;
+                    TamaSpawnedList[i] = newTama;
+                    TamaNumList[i] = TamaNumList[i - 7];
+
+                    Destroy(TamaSpawnedList[i - 7]);
+                    TamaNumList[i - 7] = TamaNull;
+                }
+                else
+                {
+
+                }
+            }
+
+            //準備できている次の玉1列を下から上げる
+            for (int z = 0; z < 7; z++)
+            {
+                Transform targetPoint = TamaTransformList[z];
+                GameObject newTama = Instantiate(TamaKindList[NextTamaNumList[z]]);
+                newTama.transform.position = targetPoint.position;
+                TamaSpawnedList[z] = newTama;
+                TamaNumList[z] = NextTamaNumList[z];
+
+                Destroy(NextTamaList[z]);
+                NextTamaNumList[z] = TamaNull;
+            }
+
+            yield return new WaitForSeconds(0.2f);
+
+            //TamaMove Move
+            tamaMove = true;
+
+            //新しく次の玉1列を生じる
+            for (int i = 0; i < 7; i++)
+            {
+                var z = UnityEngine.Random.Range(0, 4);
+
+                Transform targetPoint = NextTamaTransformList[i];
+                GameObject newTama = Instantiate(TamaKindList[z]);
+                newTama.transform.position = targetPoint.position;
+                NextTamaList[i] = newTama;
+                NextTamaNumList[i] = z;
+            }
         }
     }
 
@@ -303,30 +363,37 @@ public class GameLogic : MonoBehaviour
     //Move (Tama Fall.)
     IEnumerator TamaMove()
     {
-        for (int i = 0; i < 77; i++)
+        if(tamaMove == true)
         {
-            if (TamaNumList[i] == TamaNull)
+            for (int i = 0; i < 77; i++)
             {
-                if (TamaNumList[i + 7] != TamaNull)
+                if (TamaNumList[i] == TamaNull)
                 {
-                    Transform targetPoint = TamaTransformList[i];
-                    GameObject newTama = Instantiate(TamaKindList[TamaNumList[i + 7]]);
-                    newTama.transform.position = targetPoint.position;
-                    TamaSpawnedList[i] = newTama;
-                    TamaNumList[i] = TamaNumList[i + 7];
+                    if (TamaNumList[i + 7] != TamaNull)
+                    {
+                        Transform targetPoint = TamaTransformList[i];
+                        GameObject newTama = Instantiate(TamaKindList[TamaNumList[i + 7]]);
+                        newTama.transform.position = targetPoint.position;
+                        TamaSpawnedList[i] = newTama;
+                        TamaNumList[i] = TamaNumList[i + 7];
 
-                    Destroy(TamaSpawnedList[i + 7]);
-                    TamaNumList[i + 7] = TamaNull;
+                        Destroy(TamaSpawnedList[i + 7]);
+                        TamaNumList[i + 7] = TamaNull;
+                    }
+                    else
+                    {
+                        //Don't Move
+                    }
                 }
                 else
                 {
                     //Don't Move
                 }
             }
-            else
-            {
-                //Don't Move
-            }
+        }
+        else if(tamaMove == false)
+        {
+            //Don't Move
         }
 
         yield return new WaitForSeconds(tamaSpeed);

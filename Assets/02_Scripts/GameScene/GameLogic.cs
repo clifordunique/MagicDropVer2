@@ -276,8 +276,24 @@ public class GameLogic : MonoBehaviour
         else if (GameSettings.ClearRule == DropClearRule.Chain)
         {
             if (CheckClearDrops())
-                ClearDrops();
-
+            {
+                switch (GameSettings.ClearTiming)
+                {
+                    case DropClearTiming.Always:
+                    {
+                        ClearDrops();
+                        break;
+                    }
+                    case DropClearTiming.Dropped:
+                    {
+                        if (CheckAllDropsDropped())
+                        {
+                            ClearDrops();
+                        }
+                        break;
+                    }
+                }
+            }
         }
 
         // UpdateDrops Loops
@@ -316,22 +332,46 @@ public class GameLogic : MonoBehaviour
         yield return new WaitForSeconds(tamaSpeed);
     }
 
+    private bool CheckAllDropsDropped ()
+    {
+        var column = 0;
+        for (var row = RowCount - 2; 0 < row; row--)
+        {
+            var dropIndex = row * ColumnCount + column;
+            if (TamaNumList[dropIndex] == TamaNull) continue;
+
+            if (dropIndex < ColumnCount)
+            {
+                column++;
+                row = RowCount - 1;
+                continue;
+            }
+
+            if (TamaNumList[dropIndex - ColumnCount] == TamaNull)
+            {
+                return false;
+            }
+            column++;
+            row = RowCount - 1;
+                
+            if (ColumnCount <= column) break;
+        }
+        return true;
+    }
+    
     /// <summary>
     /// 玉を削除
     /// </summary>
     void ClearDrops()
     {
-        for (int i = 0; i < ClearDropList.Count; i++)
+        foreach (var drops in ClearDropList)
         {
-            var drops = ClearDropList[i];
             foreach (var dropIndex in drops)
             {
-                var tama = TamaSpawnedList[dropIndex];
-                tama.GetComponent<TamaLogic>().Splash(() =>
-                {
-                    TamaNumList[dropIndex] = TamaNull;
-                });
+                var drop = TamaSpawnedList[dropIndex];
+                drop.GetComponent<TamaLogic>().Splash(() => TamaNumList[dropIndex] = TamaNull);
             }
+
             drops.Clear();
         }
         ClearDropList.Clear();
@@ -385,8 +425,6 @@ public class GameLogic : MonoBehaviour
                     }
                 }
 
-                var chainedStr = "";
-                checkCell.ForEach(x => x.ForEach(y => { chainedStr += $"[{y}]"; }));
                 if (1 < checkedChainedList.Count)
                 {
                     chainCheckedList.Add(checkedChainedList);
@@ -394,9 +432,6 @@ public class GameLogic : MonoBehaviour
 
                 if (checkedChainedList.Count < TamaMinChainCount) continue;
                         
-                var debugLog = "AnyChained" + $"{(dropTarget)}";
-                Debug.Log(debugLog);
-
                 var chainedList = new List<int>();
                 for (var i = 0; i < checkCell.Count; i++)
                 {
@@ -404,21 +439,15 @@ public class GameLogic : MonoBehaviour
                     {
                         if (checkCell[i][j] == 1)
                         {
-
                             chainedList.Add(j * ColumnCount + i);
                         }
                     }
                 }
 
+                var debugLog = "AnyChained" + $"{(dropTarget)}";
                 chainedList.ForEach(chain => debugLog += $"[{chain}]");
                 Debug.Log($"{debugLog}");
                 ClearDropList.Add(chainedList);
-
-                // var chainedList = CheckChainDropList(dropIndex, dropTarget, checkCell);
-                // if (chainedList != null)
-                // {
-                //     
-                // }
             }
         }
         return 0 < ClearDropList.Count;
@@ -453,20 +482,19 @@ public class GameLogic : MonoBehaviour
         for (var v = 0; v < RowCount - 1; v++)
         {
             // 横方向
-            for (int h = 0; h < ColumnCount - 3; h++)
+            for (var h = 0; h < ColumnCount - 3; h++)
             {
                 // 探索中の配列index and object
                 var targetIndex = v * ColumnCount + h;
-                var targetTama = TamaNumList[targetIndex];
+                var targetDrop = TamaNumList[targetIndex];
 
-                // 連結しているか探索 (横方向 chain horizonai)
+                // 連結しているか探索 (横方向 chain horizontal)
                 var chainCount = 1;
                 var limitCount = (v + 1) * ColumnCount;
-                var chainStrings = $"[{v}:{h}] ({targetTama}) [{targetIndex}]";
-
+                var chainStrings = $"[{v}:{h}] ({targetDrop}) [{targetIndex}]";
                 for (var ch = targetIndex + 1; ch < limitCount; ch++)
                 {
-                    var isChained = targetTama != TamaNull && targetTama == TamaNumList[ch];
+                    var isChained = targetDrop != TamaNull && targetDrop == TamaNumList[ch];
                     if (targetIndex < ColumnCount)
                     {
                         // 連結しているならカウントアップ

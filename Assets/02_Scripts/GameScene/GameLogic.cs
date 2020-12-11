@@ -61,6 +61,7 @@ public class GameLogic : MonoBehaviour
     {
         TamaStart();
         NextTamaStart();
+        
         StartCoroutine(UpdateDrops());
     }
 
@@ -331,27 +332,42 @@ public class GameLogic : MonoBehaviour
             CheckTamaClearHorizontal();
             CheckTamaClearVertical();
 
-            ClearDrops();
+            switch (GameSettings.ClearTiming)
+            {
+                case DropClearTiming.Always:
+                {
+                    ClearDrops();
+                    break;
+                }
+                case DropClearTiming.Dropped:
+                {
+                    if (CheckAllDropsDropped())
+                    {
+                        ClearDrops();
+                    }
+                    break;
+                }
+            }
         }
         else if (GameSettings.ClearRule == DropClearRule.Chain)
         {
-            if (CheckClearDrops())
+            switch (GameSettings.ClearTiming)
             {
-                switch (GameSettings.ClearTiming)
+                case DropClearTiming.Always:
                 {
-                    case DropClearTiming.Always:
+                    if (CheckClearDrops())
                     {
                         ClearDrops();
-                        break;
                     }
-                    case DropClearTiming.Dropped:
+                    break;
+                }
+                case DropClearTiming.Dropped:
+                {
+                    if (CheckAllDropsDropped() && CheckClearDrops())
                     {
-                        if (CheckAllDropsDropped())
-                        {
-                            ClearDrops();
-                        }
-                        break;
+                        ClearDrops();
                     }
+                    break;
                 }
             }
         }
@@ -406,7 +422,7 @@ public class GameLogic : MonoBehaviour
         {
             var dropIndex = row * ColumnCount + column;
             if (TamaNumList[dropIndex] == TamaNull) continue;
-
+            
             if (dropIndex < ColumnCount)
             {
                 column++;
@@ -414,10 +430,12 @@ public class GameLogic : MonoBehaviour
                 continue;
             }
 
-            if (TamaNumList[dropIndex - ColumnCount] == TamaNull)
+            for (var after = row - 1; 0 < after; after--)
             {
-                return false;
+                dropIndex = after * ColumnCount + column;
+                if (TamaNumList[dropIndex] == TamaNull) return false;
             }
+            
             column++;
             row = RowCount - 1;
                 

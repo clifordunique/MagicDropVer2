@@ -18,6 +18,9 @@ public class LobbyUIManager : MonoBehaviour
     public Button btnclearTimingAfterDrop;
     public Button btntamaCreateTop;
     public Button btntamaCreateBottom;
+    public Text textTamaSpeedUpCount;
+    public Button btnTamaSpeedM;
+    public Button btnTamaSpeedP;
 
     [SerializeField] private LobbyLogic _lobbyLogic;
 
@@ -37,12 +40,37 @@ public class LobbyUIManager : MonoBehaviour
     void Update()
     {
         GameModeButtonCheck();
+        TamaDropSpeedUI();
     }
 
     //ResetAll        (void Awake)
     void ResetAll()
     {
         popupGameMode.gameObject.SetActive(false);
+    }
+
+    //TamaDropSpeed
+    void TamaDropSpeedUI()
+    {
+        int i = LobbyLogic.tamaDropSpeed;
+
+        textTamaSpeedUpCount.text = i.ToString();
+
+        if(i <= 1)
+        {
+            btnTamaSpeedM.interactable = false;
+            btnTamaSpeedP.interactable = true;
+        }
+        else if(i >= 10)
+        {
+            btnTamaSpeedM.interactable = true;
+            btnTamaSpeedP.interactable = false;
+        }
+        else
+        {
+            btnTamaSpeedM.interactable = true;
+            btnTamaSpeedP.interactable = true;
+        }
     }
 
     //GameMode Button Check       (void Update)

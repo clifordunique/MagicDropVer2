@@ -22,6 +22,8 @@ public class GameLogic : MonoBehaviour
     bool checkCarry;      //true=carry   , false=not carry
     bool checkSelectTamaDelete;         //true=Delete   , false=not Delete
     bool tamaMove;        //true=move    , false=stop
+    public int TamaDropSpeedUpMax;
+    public int TamaDropSpeedUpCount;
 
     //Skill
     bool checkSkillBat;   //true=can     , false=can't
@@ -80,13 +82,13 @@ public class GameLogic : MonoBehaviour
             //Don't Active Bat Skill
         }
 
-        TurtlrSkill();
+        TamaSpeedUpCount();
     }
 
     //ResetAll          (void Awake)
     void ResetAll()
     {
-        tamaSpeed = 0.4f;
+        tamaSpeed = 0.5f;
 
         carryNum = TamaNull;
         selectNum = TamaNull;
@@ -94,6 +96,8 @@ public class GameLogic : MonoBehaviour
         checkCarry = false;
         checkSelectTamaDelete = true;
         tamaMove = true;
+        TamaDropSpeedUpMax = LobbyLogic.tamaDropSpeed;
+        TamaDropSpeedUpCount = 0;
 
         //Skill
         checkSkillBat = false;
@@ -132,6 +136,24 @@ public class GameLogic : MonoBehaviour
         }
     }
 
+    //Tama Speed Up Count            (void Update)
+    void TamaSpeedUpCount()
+    {
+        if(TamaDropSpeedUpCount == TamaDropSpeedUpMax)
+        {
+            if (tamaSpeed > 0.2f)
+            {
+                tamaSpeed = tamaSpeed - 0.1f;
+            }
+            else if (tamaSpeed > 0.1f && tamaSpeed <= 0.1f)
+            {
+                tamaSpeed = 0.1f;
+            }
+
+            TamaDropSpeedUpCount = 0;
+        }
+    }
+
     //Next Tama
     public void NextTama()
     {
@@ -154,6 +176,7 @@ public class GameLogic : MonoBehaviour
                 Destroy(NextTamaList[i]);
                 NextTamaNumList[i] = TamaNull;
             }
+            TamaDropSpeedUpCount++;
 
             yield return new WaitForSeconds(0.2f);
 
@@ -206,6 +229,7 @@ public class GameLogic : MonoBehaviour
                 Destroy(NextTamaList[z]);
                 NextTamaNumList[z] = TamaNull;
             }
+            TamaDropSpeedUpCount++;
 
             yield return new WaitForSeconds(0.2f);
 
@@ -894,28 +918,16 @@ public class GameLogic : MonoBehaviour
     //Skill Turtle
     public void BtnSkillTurtle()
     {
-        if (checkTurtleSkill == true)
+        if(tamaSpeed < 0.9f)
         {
-            checkTurtleSkill = false;
+            tamaSpeed = tamaSpeed + 0.1f;
         }
-        else if (checkTurtleSkill == false)
+        else if(tamaSpeed > 0.9f && tamaSpeed <= 1.0f)
         {
-            checkTurtleSkill = true;
+            tamaSpeed = 1.0f;
         }
 
         Debug.Log("Skill : Turtle");
-    }
-
-    void TurtlrSkill()                 //void update
-    {
-        if (checkTurtleSkill == true)
-        {
-            tamaSpeed = 0.6f;
-        }
-        else if (checkTurtleSkill == false)
-        {
-            tamaSpeed = 0.4f;
-        }
     }
 
     //Skill Stop

@@ -10,6 +10,9 @@ public class LobbyLogic : MonoBehaviour
     public bool clearTiming;   //true=Always    false=Drop->Claer
     public bool tamaCreate;    //true=Top       false=Bottom
 
+    //Tama Speed Up
+    public static int tamaDropSpeed;
+
 
 
 
@@ -37,6 +40,9 @@ public class LobbyLogic : MonoBehaviour
         clearRule = true;
         clearTiming = true;
         tamaCreate = true;
+
+        //Tama Speed
+        tamaDropSpeed = 5;
     }
 
     //Btn GameMode ClearRule
@@ -77,5 +83,31 @@ public class LobbyLogic : MonoBehaviour
             tamaCreate = true;
         }
 
+    }
+
+    //Tama Drop Speed P
+    public void BtnTamaSropSpeedP()
+    {
+        if(tamaDropSpeed < 10)
+        {
+            tamaDropSpeed++;
+        }
+        else if(tamaDropSpeed >= 10)
+        {
+            tamaDropSpeed = 10;
+        }
+    }
+
+    //Tama Drop Speed M
+    public void BtnTamaSropSpeedM()
+    {
+        if (tamaDropSpeed > 1)
+        {
+            tamaDropSpeed--;
+        }
+        else if (tamaDropSpeed <= 1)
+        {
+            tamaDropSpeed = 1;
+        }
     }
 }

@@ -9,6 +9,13 @@ public class GameUIManager : MonoBehaviour
     public Text textTime;
     int time;
 
+    //TamaDropSpeedUpCount
+    float dropSpeed;
+    int tamaDropSpeedUpMax;
+    int tamaDropSpeedUpCount;
+    public Text textDropSpeed;
+    public Text textTamaDropSpeedUpCount;
+
     //Drop Position
     public GameObject objDrop_0;
     public GameObject objDrop_1;
@@ -36,6 +43,8 @@ public class GameUIManager : MonoBehaviour
     //GameOver
     public GameObject popupGameOver;
 
+    [SerializeField] private GameLogic _gameLogic;
+
 
 
     void Awake()
@@ -51,6 +60,7 @@ public class GameUIManager : MonoBehaviour
     void Update()
     {
         TimeTextUpdate();
+        TamaSpeed();
         DropPositionCheck();
         CheckSkillActive();
     }
@@ -95,7 +105,7 @@ public class GameUIManager : MonoBehaviour
             if (time == 0)
             {
                 //Next Tama Drop
-                GameObject.Find("GameLogic").GetComponent<GameLogic>().NextTama();
+                _gameLogic.NextTama();
 
                 //Time Reset
                 time = 10;
@@ -131,6 +141,17 @@ public class GameUIManager : MonoBehaviour
 
             StartCoroutine(SkillStopCoroutine());
         }
+    }
+
+    //TamaSpeed                   (void Update)
+    void TamaSpeed()
+    {
+        dropSpeed = _gameLogic.tamaSpeed;
+        tamaDropSpeedUpCount = _gameLogic.TamaDropSpeedUpCount;
+        tamaDropSpeedUpMax = _gameLogic.TamaDropSpeedUpMax;
+
+        textDropSpeed.text = dropSpeed.ToString("N1");
+        textTamaDropSpeedUpCount.text = tamaDropSpeedUpCount.ToString() + " / " + tamaDropSpeedUpMax.ToString();
     }
 
     //SKill On Off
@@ -199,14 +220,14 @@ public class GameUIManager : MonoBehaviour
 
     public void BtnSkillTurtle()
     {
-        if (skillTurtle == true)
-        {
-            skillTurtle = false;
-        }
-        else if (skillTurtle == false)
-        {
-            skillTurtle = true;
-        }
+        //if (skillTurtle == true)
+        //{
+        //    skillTurtle = false;
+        //}
+        //else if (skillTurtle == false)
+        //{
+        //    skillTurtle = true;
+        //}
     }
 
     public void BtnSkillStop()
